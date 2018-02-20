@@ -5,18 +5,25 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.iktdev.nanostat.CustomViews.CircleProgressBar;
 import com.iktdev.nanostat.core.HttpHandler;
+import com.iktdev.nanostat.core.currentCryptoValues;
 import com.iktdev.nanostat.core.nanopoolHandler;
+
+import org.w3c.dom.Text;
 
 public class NanopoolStatsFragment extends Fragment {
 
@@ -54,31 +61,63 @@ public class NanopoolStatsFragment extends Fragment {
         });
 
         fetchData();
+
     }
 
     private HttpHandler httpHandler = null;
     private nanopoolHandler apiHandler = null;
+    public currentCryptoValues ccv;
     public void fetchData()
     {
         if (apiHandler == null)
             apiHandler = new nanopoolHandler();
 
+        ccv = new currentCryptoValues();
         switch (crypto)
         {
             case R.string.eth_address:
+                SetDefaults(R.drawable.ic_etherum, "ETH", "MH/s");
 
+                /*apiHandler.getBalance(getActivity(),
+                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
+                        apiHandler.balance(nanopoolHandler.Eth_main, wallet)
+                );*/
+
+                apiHandler.getGeneral(getActivity(),
+                        apiHandler.general(nanopoolHandler.Eth_main, wallet),
+                        ccv,
+                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
+                        (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
+                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate)
+                );
+                setPayoutProgress();
                 break;
             case R.string.zec_address:
-                SetDefaults(R.drawable.ic_zcash);
+                SetDefaults(R.drawable.ic_zcash, "ZEC", "Sol/s");
 
-                //getBalance((TextView)getView().findViewById(R.id.fragment_stats_balance), apiHandler.balance(nanopoolHandler.Zec_main, wallet));
-                /*apiHandler.setBalance((TextView)getView().findViewById(R.id.fragment_stats_cryptotype),
-                        apiHandler.getJSONField(handleResponse(apiHandler.getBalance(nanopoolHandler.Zec_main, wallet)), "data")
-                        );*/
-                apiHandler.getBalance(getActivity(),
+                /*apiHandler.getBalance(getActivity(),
                         (TextView)getView().findViewById(R.id.fragment_stats_balance),
                         apiHandler.balance(nanopoolHandler.Zec_main, wallet)
+                );*/
+
+                apiHandler.getGeneral(getActivity(),
+                        apiHandler.general(nanopoolHandler.Zec_main, wallet),
+                        ccv,
+                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
+                        (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
+                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate)
                 );
+
+                apiHandler.getChartData(getActivity(),
+                        apiHandler.hashratechart(nanopoolHandler.Zec_main, wallet),
+                        (LineChart)getView().findViewById(R.id.fragment_stats_chart)
+                        );
+                apiHandler.getPayoutLimit(getActivity(),
+                        apiHandler.payoutlimit(nanopoolHandler.Zec_main, wallet),
+                        ccv,
+                        (TextView)getView().findViewById(R.id.fragment_stats_payoutLimit)
+                );
+                setPayoutProgress();
                 break;
             default:
                 //Alert
@@ -90,12 +129,44 @@ public class NanopoolStatsFragment extends Fragment {
         //Boolean setUrl = httpHandler.setUrl(nanopoolHandler.Zec.Zec_main, apiHandler.Zec. )
     }
 
-    private void SetDefaults(int Resid)
+    private void SetDefaults(int Resid, String currcencyShort, String hashrateFormat)
     {
         ((ImageView)getView().findViewById(R.id.crypto_ic)).setImageResource(Resid);
+        ((TextView)getView().findViewById(R.id.fragment_stats_cryptoName)).setText(currcencyShort);
+        ((TextView)getView().findViewById(R.id.fragment_stats_hashrate_format)).setText(hashrateFormat);
+        ((TextView)getView().findViewById(R.id.fragment_stats_cryptoNameLimit)).setText(currcencyShort);
     }
 
 
+
+    public void setPayoutProgress()
+    {
+        final TextView payoutProgressText = (TextView)getView().findViewById(R.id.fragment_stats_progressPercent);
+        final CircleProgressBar payoutProgress = getView().findViewById(R.id.fragment_stats_payoutProgressBar);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                while (ccv.getBalance_changed() == null && ccv.getPayoutLimit_changed() == null)
+                {
+                    Log.e("WAITING", "Waiting for Balance and Payoutlimit change!");
+                    SystemClock.sleep(500);
+                }
+
+                final double progress = ((ccv.getBalance() / ccv.getPayoutLimit())*100);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        payoutProgress.setProgressWithAnimation((float)progress);
+                        payoutProgressText.setText(String.valueOf(Math.round(progress))+ "%" );
+                    }
+                });
+
+
+            }
+        });
+    }
 
 
 

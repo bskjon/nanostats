@@ -62,10 +62,12 @@
                         android:orientation="horizontal"
                         android:gravity="center_horizontal">
                         <TextView
+                            android:id="@+id/fragment_stats_unconfirmed_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0.00000"/>
                         <TextView
+                            android:id="@+id/fragment_stats_cryptoName"
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
