@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_eth"
+            android:icon="@drawable/ic_etherum"
+            android:title="Etherum" />
+        <item
+            android:id="@+id/nav_etc"
+            android:icon="@drawable/ic_etherum_classic"
+            android:title="Etherum Classic" />
+        <item
+            android:id="@+id/nav_sia"
+            android:icon="@drawable/ic_siacoin"
+            android:title="SiaCoin" />
+        <item
+            android:id="@+id/nav_zec"
+            android:icon="@drawable/ic_zcash"
+            android:title="ZCash" />
+        <item
+            android:id="@+id/nav_xmr"
+            android:icon="@drawable/ic_monero"
+            android:title="Monero" />
+        <item
+            android:id="@+id/nav_pasc"
+            android:icon="@drawable/ic_pascal"
+            android:title="Pascal" />
+        <item
+            android:id="@+id/nav_etn"
+            android:icon="@drawable/ic_electroneum"
+            android:title="Electroneum" />
+    </group>
+
+    <!--<item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>-->
+
+</menu>
