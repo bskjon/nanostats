@@ -9,6 +9,8 @@ import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,6 +62,11 @@ public class NanopoolStatsFragment extends Fragment {
             }
         });
 
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        ((RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)).setLayoutManager(linearLayoutManager);
+
         fetchData();
 
     }
@@ -73,6 +80,7 @@ public class NanopoolStatsFragment extends Fragment {
             apiHandler = new nanopoolHandler();
 
         ccv = new currentCryptoValues();
+        currentCryptoValues.WalletType = crypto;
         switch (crypto)
         {
             case R.string.eth_address:
@@ -88,7 +96,8 @@ public class NanopoolStatsFragment extends Fragment {
                         ccv,
                         (TextView)getView().findViewById(R.id.fragment_stats_balance),
                         (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate)
+                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
+                        (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
                 );
                 setPayoutProgress();
                 break;
@@ -105,13 +114,15 @@ public class NanopoolStatsFragment extends Fragment {
                         ccv,
                         (TextView)getView().findViewById(R.id.fragment_stats_balance),
                         (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate)
+                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
+                        (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
                 );
 
                 apiHandler.getChartData(getActivity(),
                         apiHandler.hashratechart(nanopoolHandler.Zec_main, wallet),
                         (LineChart)getView().findViewById(R.id.fragment_stats_chart)
                         );
+
                 apiHandler.getPayoutLimit(getActivity(),
                         apiHandler.payoutlimit(nanopoolHandler.Zec_main, wallet),
                         ccv,

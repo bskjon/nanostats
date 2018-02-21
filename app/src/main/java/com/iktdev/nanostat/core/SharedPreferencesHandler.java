@@ -28,5 +28,14 @@ public class SharedPreferencesHandler
         editor.commit();
     }
 
+    public void deleteString(Activity context, int id)
+    {
+        String key = context.getResources().getResourceEntryName(id);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 
 }

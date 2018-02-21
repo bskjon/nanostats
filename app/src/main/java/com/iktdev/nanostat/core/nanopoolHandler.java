@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.iktdev.nanostat.adapters.workerAdpater;
 import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
 
 import org.json.JSONArray;
@@ -79,7 +81,7 @@ public class nanopoolHandler
         }
         return false;
     }
-    public boolean getGeneral(final Activity context, String url, final currentCryptoValues cryptoValues, final TextView balance, final TextView unconfirmed_balance, final TextView hashrate)
+    public boolean getGeneral(final Activity context, String url, final currentCryptoValues cryptoValues, final TextView balance, final TextView unconfirmed_balance, final TextView hashrate, final RecyclerView recyclerView)
     {
         final HttpHandler httpHandler = new HttpHandler();
         boolean urlAllowed = httpHandler.setUrl(url);
@@ -100,6 +102,12 @@ public class nanopoolHandler
                             balance.setText(gi.balance);
                             unconfirmed_balance.setText("+ " + gi.unconfirmed_balance);
                             hashrate.setText(String.valueOf(gi.hashrate));
+
+                            recyclerView.setHasFixedSize(true);
+                            com.iktdev.nanostat.adapters.workerAdpater adapter = new workerAdpater(context, gi.workersList);
+                            recyclerView.setAdapter(adapter);
+                            //recyclerView
+
                         }
                     });
                 }
@@ -312,12 +320,16 @@ public class nanopoolHandler
                 for (int i = 0; i < workers.length(); i++)
                 {
                     JSONObject wrok = workers.getJSONObject(i);
+                    long unixTimeStamp = wrok.getLong("lastshare");
+
+
                     Workers w = new Workers(
                             wrok.getString("id"),
                             wrok.getDouble("hashrate"),
-                            new Date(wrok.getInt("lastshare")),
+                            new Date((unixTimeStamp*1000L)),
                             wrok.getDouble("rating")
                     );
+                    w.setRateType();
 
                     w.h1 = avgHashrate.getDouble("h1");
                     w.h3 = avgHashrate.getDouble("h3");
@@ -344,38 +356,6 @@ public class nanopoolHandler
 
 
 
-    }
-    private class Workers
-    {
-        public String id;
-        public double hashrate;
-        public Date lastshare;
-        public double rating;
-        public double h1;
-        public double h3;
-        public double h6;
-        public double h12;
-        public double h24;
-
-
-        public Workers() {}
-        public Workers(String id, double hashrate, Date lastshare, double rating)
-        {
-            this.id = id;
-            this.hashrate = hashrate;
-            this.lastshare = lastshare;
-            this.rating = rating;
-        }
-
-
-        public void sethashrate(double h1, double h3, double h6, double h12, double h24)
-        {
-            this.h1 = h1;
-            this.h3 = h3;
-            this.h6 = h6;
-            this.h12 = h12;
-            this.h24 = h24;
-        }
     }
 
     public class ChartData

@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity
         {
             //setVisibleFragment((Fragment) new NanopoolStatsFragment());
         }
+        else if (id == R.id.nav_myAccounts)
+        {
+            Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+            startActivity(intent);
+        }
 
 
 

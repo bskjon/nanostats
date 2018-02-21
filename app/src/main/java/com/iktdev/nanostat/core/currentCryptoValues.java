@@ -9,6 +9,8 @@ import java.util.Date;
 
 public class currentCryptoValues
 {
+    public static int WalletType;
+
     private double PayoutLimit;
     private Date PayoutLimit_changed = null;
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp">
+    <android.support.v7.widget.CardView
+        android:elevation="3dp"
+        android:id="@+id/adapter_workers_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/adapter_accounts_menuButton"
+                android:id="@+id/adapter_accounts_Wrapper"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="6dp">
+                <LinearLayout
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/adapter_accounts_walletIcon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:tint="#000"
+                        android:src="@drawable/ic_account_wallet"/>
+                    <TextView
+                        android:layout_marginLeft="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/adapter_accounts_walletType"
+                        android:text="Wallety"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/adapter_accounts_walletAddress"
+                    android:text="[Wallet address]"
+                    android:paddingBottom="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <ImageButton
+                android:layout_alignParentRight="true"
+                android:id="@+id/adapter_accounts_menuButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:src="@drawable/ic_more_vert"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>
