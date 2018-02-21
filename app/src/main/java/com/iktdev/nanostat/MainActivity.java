@@ -93,29 +93,57 @@ public class MainActivity extends AppCompatActivity
         {
             String address = sph.getString(this, R.string.eth_address);
             if (address != null)
-            {
                 setVisibleFragment((Fragment) createFragment(R.string.eth_address, address));
-            }
             else
-            {
                 addAccountDialog(R.string.eth_address);
-            }
+        }
+        else if (id == R.id.nav_etc)
+        {
+            String address = sph.getString(this, R.string.etc_address);
+            if (address != null)
+                setVisibleFragment((Fragment) createFragment(R.string.etc_address, address));
+            else
+                addAccountDialog(R.string.etc_address);
+        }
+        else if (id == R.id.nav_sia)
+        {
+            String address = sph.getString(this, R.string.sia_address);
+            if (address != null)
+                setVisibleFragment((Fragment) createFragment(R.string.sia_address, address));
+            else
+                addAccountDialog(R.string.sia_address);
         }
         else if (id == R.id.nav_zec)
         {
             String address = sph.getString(this, R.string.zec_address);
             if (address != null)
-            {
                 setVisibleFragment((Fragment) createFragment(R.string.zec_address, address));
-            }
             else
-            {
                 addAccountDialog(R.string.zec_address);
-            }
         }
-        else if (id == R.id.nav_etc)
+        else if (id == R.id.nav_xmr)
         {
-            //setVisibleFragment((Fragment) new NanopoolStatsFragment());
+            String address = sph.getString(this, R.string.xmr_address);
+            if (address != null)
+                setVisibleFragment((Fragment) createFragment(R.string.xmr_address, address));
+            else
+                addAccountDialog(R.string.xmr_address);
+        }
+        else if (id == R.id.nav_pasc)
+        {
+            String address = sph.getString(this, R.string.pasc_address);
+            if (address != null)
+                setVisibleFragment((Fragment) createFragment(R.string.pasc_address, address));
+            else
+                addAccountDialog(R.string.pasc_address);
+        }
+        else if (id == R.id.nav_etn)
+        {
+            String address = sph.getString(this, R.string.etn_address);
+            if (address != null)
+                setVisibleFragment((Fragment) createFragment(R.string.etn_address, address));
+            else
+                addAccountDialog(R.string.etn_address);
         }
         else if (id == R.id.nav_myAccounts)
         {

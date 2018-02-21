@@ -3,6 +3,7 @@ package com.iktdev.nanostat.core;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
@@ -38,6 +39,11 @@ public class nanopoolHandler
 {
     public static String Zec_main = "https://api.nanopool.org/v1/zec/";
     public static String Eth_main = "https://api.nanopool.org/v1/eth/";
+    public static String Etc_main = "https://api.nanopool.org/v1/etc/";
+    public static String Sia_main = "https://api.nanopool.org/v1/sia/";
+    public static String Xmr_main = "https://api.nanopool.org/v1/xmr/";
+    public static String Pasc_main = "https://api.nanopool.org/v1/pasc/";
+    public static String Etn_main = "https://api.nanopool.org/v1/etn/";
 
 
     public String balance(String prefix, String Address)

@@ -51,10 +51,6 @@ public class Workers
             case R.string.zec_address:
                 rateType = "Sol/s";
                 break;
-
-            default:
-                rateType = "Speed?";
-                break;
         }
     }
 

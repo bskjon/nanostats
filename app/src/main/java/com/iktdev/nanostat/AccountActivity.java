@@ -193,6 +193,21 @@ public class AccountActivity extends AppCompatActivity {
             case R.string.eth_address:
                 prefix = nanopoolHandler.Eth_main;
                 break;
+            case R.string.etc_address:
+                prefix = nanopoolHandler.Etc_main;
+                break;
+            case R.string.sia_address:
+                prefix = nanopoolHandler.Sia_main;
+                break;
+            case R.string.xmr_address:
+                prefix = nanopoolHandler.Xmr_main;
+                break;
+            case R.string.pasc_address:
+                prefix = nanopoolHandler.Pasc_main;
+                break;
+            case R.string.etn_address:
+                prefix = nanopoolHandler.Etn_main;
+                break;
             case R.string.zec_address:
                 prefix = nanopoolHandler.Zec_main;
                 break;

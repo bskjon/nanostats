@@ -27,6 +27,8 @@ import com.iktdev.nanostat.core.nanopoolHandler;
 
 import org.w3c.dom.Text;
 
+import java.util.Set;
+
 public class NanopoolStatsFragment extends Fragment {
 
     private int crypto  = -1;
@@ -84,52 +86,47 @@ public class NanopoolStatsFragment extends Fragment {
         switch (crypto)
         {
             case R.string.eth_address:
-                SetDefaults(R.drawable.ic_etherum, "ETH", "MH/s");
-
-                /*apiHandler.getBalance(getActivity(),
-                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
-                        apiHandler.balance(nanopoolHandler.Eth_main, wallet)
-                );*/
-
-                apiHandler.getGeneral(getActivity(),
-                        apiHandler.general(nanopoolHandler.Eth_main, wallet),
-                        ccv,
-                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
-                        (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
-                );
+                SetDefaults(R.drawable.ic_etherum, "ETH", "Mh/s");
+                CallApis(nanopoolHandler.Eth_main);
                 setPayoutProgress();
                 break;
+
+            case R.string.etc_address:
+                SetDefaults(R.drawable.ic_etherum_classic, "ETC", "Mh/s");
+                CallApis(nanopoolHandler.Etc_main);
+                setPayoutProgress();
+                break;
+
+            case R.string.sia_address:
+                SetDefaults(R.drawable.ic_siacoin, "SIA", "Mh/s");
+                CallApis(nanopoolHandler.Sia_main);
+                setPayoutProgress();
+                break;
+
             case R.string.zec_address:
                 SetDefaults(R.drawable.ic_zcash, "ZEC", "Sol/s");
-
-                /*apiHandler.getBalance(getActivity(),
-                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
-                        apiHandler.balance(nanopoolHandler.Zec_main, wallet)
-                );*/
-
-                apiHandler.getGeneral(getActivity(),
-                        apiHandler.general(nanopoolHandler.Zec_main, wallet),
-                        ccv,
-                        (TextView)getView().findViewById(R.id.fragment_stats_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
-                        (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
-                        (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
-                );
-
-                apiHandler.getChartData(getActivity(),
-                        apiHandler.hashratechart(nanopoolHandler.Zec_main, wallet),
-                        (LineChart)getView().findViewById(R.id.fragment_stats_chart)
-                        );
-
-                apiHandler.getPayoutLimit(getActivity(),
-                        apiHandler.payoutlimit(nanopoolHandler.Zec_main, wallet),
-                        ccv,
-                        (TextView)getView().findViewById(R.id.fragment_stats_payoutLimit)
-                );
+                CallApis(nanopoolHandler.Zec_main);
                 setPayoutProgress();
                 break;
+
+            case R.string.xmr_address:
+                SetDefaults(R.drawable.ic_monero, "XMR", "H/s");
+                CallApis(nanopoolHandler.Xmr_main);
+                setPayoutProgress();
+                break;
+
+            case R.string.pasc_address:
+                SetDefaults(R.drawable.ic_pascal, "PASC", "Mh/s");
+                CallApis(nanopoolHandler.Pasc_main);
+                setPayoutProgress();
+                break;
+
+            case R.string.etn_address:
+                SetDefaults(R.drawable.ic_electroneum,"ETN", "H/s");
+                CallApis(nanopoolHandler.Etn_main);
+                setPayoutProgress();
+                break;
+
             default:
                 //Alert
                 ShowDialog("No Account found", "Could not retrieve or find any account stored in the app").show();
@@ -139,6 +136,32 @@ public class NanopoolStatsFragment extends Fragment {
 
         //Boolean setUrl = httpHandler.setUrl(nanopoolHandler.Zec.Zec_main, apiHandler.Zec. )
     }
+
+    private void CallApis(String main)
+    {
+        apiHandler.getGeneral(getActivity(),
+                apiHandler.general(main, wallet),
+                ccv,
+                (TextView)getView().findViewById(R.id.fragment_stats_balance),
+                (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
+                (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
+                (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
+        );
+        apiHandler.getChartData(getActivity(),
+                apiHandler.hashratechart(main, wallet),
+                (LineChart)getView().findViewById(R.id.fragment_stats_chart)
+        );
+        apiHandler.getPayoutLimit(getActivity(),
+                apiHandler.payoutlimit(main, wallet),
+                ccv,
+                (TextView)getView().findViewById(R.id.fragment_stats_payoutLimit)
+        );
+    }
+
+
+
+
+
 
     private void SetDefaults(int Resid, String currcencyShort, String hashrateFormat)
     {
@@ -169,8 +192,12 @@ public class NanopoolStatsFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        payoutProgress.setProgressWithAnimation((float)progress);
-                        payoutProgressText.setText(String.valueOf(Math.round(progress))+ "%" );
+                        if (!Double.isInfinite(progress))
+                        {
+                            payoutProgress.setProgressWithAnimation((float)progress);
+                            payoutProgressText.setText(String.valueOf(Math.round(progress))+ "%" );
+                        }
+
                     }
                 });
 
