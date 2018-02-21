@@ -22,12 +22,218 @@
 
     <include layout="@layout/content_account" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+
+
+
+
+    <View
+        android:id="@+id/fabBGLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransBg"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/fabLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/standard_23"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Etherum"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_etherum"
+            app:fabSize="mini"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_marginBottom="@dimen/standard_23"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Etherum Classic"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_etherum_classic"
+            app:fabSize="mini"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add ZCash"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_zcash"
+            android:tint="@android:color/white"
+            app:fabSize="mini"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add SiaCoin"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_siacoin"
+            android:tint="@android:color/white"
+            app:fabSize="mini"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Monero"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_monero"
+            android:tint="@android:color/white"
+            app:fabSize="mini"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Pascal"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_pascal"
+            android:tint="@android:color/white"
+            app:fabSize="mini"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/fabLayout7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_12"
+        android:clipToPadding="false"
+        android:layout_marginRight="@dimen/standard_23"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/standard_23"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Electroneum"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_electroneum"
+            android:tint="@android:color/white"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:gravity="center_vertical"
+        android:clipToPadding="false"
+        app:layout_behavior="com.iktdev.nanostat.core.MoveUpwardBehavior"
+        android:padding="@dimen/standard_12"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_gravity="bottom|end">
+        <android.support.design.widget.FloatingActionButton
+
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_add_24dp"
+            android:tint="#FFF"
+            app:fabSize="normal"/>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

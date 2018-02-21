@@ -2,7 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#b54051</color>
+
+    <color name="colorTransBg">#26000000</color>
 
     <color name="ZECcolor">#FF3a5e84</color>
+    <color name="testColor">#FF00a8e6</color>
+
 </resources>

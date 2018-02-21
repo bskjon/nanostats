@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,12 +22,17 @@ import android.view.MenuItem;
 
 import com.iktdev.nanostat.core.SharedPreferencesHandler;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.CrashManagerListener;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CrashManager.register(this, getMetaString("net.hockeyapp.android.appIdentifier"), new CrashManagerHandler());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -227,5 +234,30 @@ public class MainActivity extends AppCompatActivity
             ft.commit();
         }
         visibleFragment = f;
+    }
+
+
+    public String getMetaString(String key)
+    {
+        try {
+            ApplicationInfo appinfo = this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            if (appinfo != null)
+            {
+                return appinfo.metaData.get(key).toString();
+            }
+            return null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public class CrashManagerHandler extends CrashManagerListener
+    {
+        @Override
+        public boolean shouldAutoUploadCrashes()
+        {
+            return true;
+        }
     }
 }

@@ -3,11 +3,13 @@ package com.iktdev.nanostat;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +61,7 @@ public class NanopoolStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace wit your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -68,6 +70,7 @@ public class NanopoolStatsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ((RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)).setLayoutManager(linearLayoutManager);
+
 
         fetchData();
 
@@ -178,6 +181,7 @@ public class NanopoolStatsFragment extends Fragment {
         final TextView payoutProgressText = (TextView)getView().findViewById(R.id.fragment_stats_progressPercent);
         final CircleProgressBar payoutProgress = getView().findViewById(R.id.fragment_stats_payoutProgressBar);
 
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -246,5 +250,6 @@ public class NanopoolStatsFragment extends Fragment {
         });
         return b.create();
     }
+
 
 }

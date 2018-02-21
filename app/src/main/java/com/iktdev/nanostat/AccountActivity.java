@@ -1,6 +1,7 @@
 package com.iktdev.nanostat;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -49,6 +50,11 @@ public class AccountActivity extends AppCompatActivity {
 
     private boolean Address_Passed = false;
 
+    FloatingActionButton fab, fab1, fab2, fab3, fab4, fab5, fab6, fab7;
+    LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4, fabLayout5, fabLayout6, fabLayout7;
+    View fabBGLayout;
+    boolean isFabOpen = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +75,29 @@ public class AccountActivity extends AppCompatActivity {
             }
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fabLayout1= (LinearLayout) findViewById(R.id.fabLayout1);
+        fabLayout2= (LinearLayout) findViewById(R.id.fabLayout2);
+        fabLayout3= (LinearLayout) findViewById(R.id.fabLayout3);
+        fabLayout4 = (LinearLayout) findViewById(R.id.fabLayout4);
+        fabLayout5 = (LinearLayout) findViewById(R.id.fabLayout5);
+        fabLayout6 = (LinearLayout) findViewById(R.id.fabLayout6);
+        fabLayout7 = (LinearLayout) findViewById(R.id.fabLayout7);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2= (FloatingActionButton) findViewById(R.id.fab2);
+        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+        fab5 = (FloatingActionButton) findViewById(R.id.fab5);
+        fab6 = (FloatingActionButton) findViewById(R.id.fab6);
+        fab7 = (FloatingActionButton) findViewById(R.id.fab7);
+        fabBGLayout=findViewById(R.id.fabBGLayout);
 
-            }
-        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ((RecyclerView)findViewById(R.id.activity_account_recyclerView)).setLayoutManager(linearLayoutManager);
 
-
+        setFabListners();
         LoadAccounts();
     }
 
@@ -176,11 +192,6 @@ public class AccountActivity extends AppCompatActivity {
         }
         return null;
     }
-
-
-
-
-
 
 
     private String prefix = "";
@@ -335,6 +346,7 @@ public class AccountActivity extends AppCompatActivity {
         }
 
     }
+
     public int itemExists(ArrayList<account> items, int key)
     {
         for (int i = 0; i < items.size(); i++)
@@ -345,5 +357,187 @@ public class AccountActivity extends AppCompatActivity {
         return -1;
     }
 
+    private void setFabListners()
+    {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isFabOpen)
+                {
+                    showFABMenu();
+                }
+                else
+                    closeFABMenu();
+            }
+        });
+        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFABMenu();
+            }
+        });
 
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.eth_address, null);
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.etc_address, null);
+            }
+        });
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.zec_address, null);
+            }
+        });
+        fab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.sia_address, null);
+            }
+        });
+        fab5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.xmr_address, null);
+            }
+        });
+        fab6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.pasc_address, null);
+            }
+        });
+        fab7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInputDialog(R.string.etn_address, null);
+            }
+        });
+
+
+
+    }
+
+    private void showFABMenu(){
+
+        isFabOpen = true;
+
+        RecyclerView rv = (RecyclerView)findViewById(R.id.activity_account_recyclerView);
+        accountAdapter adapter = (accountAdapter) rv.getAdapter();
+        if (adapter == null)
+        {
+            LoadAccounts();
+            return;
+        }
+        ArrayList<LinearLayout> visibleFabs = new ArrayList<>();
+        ArrayList<account> visibelAccounts = adapter.getItems();
+
+        if (itemExists(visibelAccounts, R.string.eth_address) == -1)
+            visibleFabs.add(fabLayout1);
+        if (itemExists(visibelAccounts, R.string.etc_address) == -1)
+            visibleFabs.add(fabLayout2);
+        if (itemExists(visibelAccounts, R.string.zec_address) == -1)
+            visibleFabs.add(fabLayout3);
+        if (itemExists(visibelAccounts, R.string.sia_address) == -1)
+            visibleFabs.add(fabLayout4);
+        if (itemExists(visibelAccounts, R.string.xmr_address) == -1)
+            visibleFabs.add(fabLayout5);
+        if (itemExists(visibelAccounts, R.string.pasc_address) == -1)
+            visibleFabs.add(fabLayout6);
+        if (itemExists(visibelAccounts, R.string.etn_address) == -1)
+            visibleFabs.add(fabLayout7);
+
+        int[] dimenArray = {
+                R.dimen.standard_55,
+                R.dimen.standard_100,
+                R.dimen.standard_145,
+                R.dimen.standard_195,
+                R.dimen.standard_245,
+                R.dimen.standard_295,
+                R.dimen.standard_345
+        };
+
+
+        fabBGLayout.setVisibility(View.VISIBLE);
+
+        fab.animate().rotationBy(225);
+        for(int i = 0; i < visibleFabs.size(); i++)
+        {
+            LinearLayout ll = visibleFabs.get(i);
+            ll.setVisibility(View.VISIBLE);
+            ll.animate().translationY(-getResources().getDimension(dimenArray[i]));
+        }
+    }
+
+
+
+    private void closeFABMenu(){
+
+        isFabOpen = false;
+
+        fabBGLayout.setVisibility(View.GONE);
+        fab.animate().rotationBy(-225);
+        fabLayout1.animate().translationY(0);
+        fabLayout2.animate().translationY(0);
+        fabLayout3.animate().translationY(0);
+
+        fabLayout4.animate().translationY(0);
+        fabLayout5.animate().translationY(0);
+        fabLayout6.animate().translationY(0);
+        fabLayout7.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(!isFabOpen){
+                    fabLayout1.setVisibility(View.GONE);
+                    fabLayout2.setVisibility(View.GONE);
+                    fabLayout3.setVisibility(View.GONE);
+                    fabLayout4.setVisibility(View.GONE);
+                    fabLayout5.setVisibility(View.GONE);
+                    fabLayout6.setVisibility(View.GONE);
+                    fabLayout7.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+
+        });
+
+    }
+
+
+
+    @Override
+
+    public void onBackPressed() {
+
+        if(isFabOpen){
+            closeFABMenu();
+        }else{
+
+            super.onBackPressed();
+
+        }
+
+    }
 }

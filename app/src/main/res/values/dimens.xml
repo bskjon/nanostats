@@ -7,4 +7,17 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+
+    <dimen name="standard_12">12dp</dimen>
+    <dimen name="standard_23">23dp</dimen>
+    <dimen name="standard_55">55dp</dimen>
+    <dimen name="standard_100">100dp</dimen>
+    <dimen name="standard_145">145dp</dimen>
+
+    <dimen name="standard_195">195dp</dimen>
+    <dimen name="standard_245">245dp</dimen>
+    <dimen name="standard_295">295dp</dimen>
+    <dimen name="standard_345">345dp</dimen>
+
 </resources>

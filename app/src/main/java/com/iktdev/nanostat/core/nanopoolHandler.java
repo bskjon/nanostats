@@ -16,6 +16,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.adapters.workerAdpater;
 import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
 
@@ -168,7 +169,9 @@ public class nanopoolHandler
                                 dataset.setDrawCircles(false);
 
 
+
                                 dataset.setDrawFilled(true);
+                                //dataset.setFillColor(R.color.testColor);
                                 dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
                                 final LineData lineData = new LineData(dataset);
