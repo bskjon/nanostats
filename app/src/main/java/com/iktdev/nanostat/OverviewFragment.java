@@ -94,42 +94,49 @@ public class OverviewFragment extends Fragment {
                     ov._prefix = nanopoolHandler.Zec_main;
                     ov.WalletImageId = R.drawable.ic_zcash;
                     ov.WalletShortText = "ZEC";
+                    ov.WalletColorId = R.color.ZECcolor;
                     break;
 
                 case R.string.eth_address:
                     ov._prefix = nanopoolHandler.Eth_main;
                     ov.WalletImageId = R.drawable.ic_etherum;
                     ov.WalletShortText = "ETH";
+                    ov.WalletColorId = R.color.ETHcolor;
                     break;
 
                 case R.string.etc_address:
                     ov._prefix = nanopoolHandler.Etc_main;
                     ov.WalletImageId = R.drawable.ic_etherum_classic;
                     ov.WalletShortText = "ETC";
+                    ov.WalletColorId = R.color.ETCcolor;
                     break;
 
                 case R.string.sia_address:
                     ov._prefix = nanopoolHandler.Sia_main;
                     ov.WalletImageId = R.drawable.ic_siacoin;
                     ov.WalletShortText = "SIA";
+                    ov.WalletColorId = R.color.SIAcolor;
                     break;
 
                 case R.string.xmr_address:
                     ov._prefix = nanopoolHandler.Xmr_main;
                     ov.WalletImageId = R.drawable.ic_monero;
                     ov.WalletShortText = "XMR";
+                    ov.WalletColorId = R.color.XMRcolor;
                     break;
 
                 case R.string.pasc_address:
                     ov._prefix = nanopoolHandler.Pasc_main;
                     ov.WalletImageId = R.drawable.ic_pascal;
                     ov.WalletShortText = "PASC";
+                    ov.WalletColorId = R.color.PASCcolor;
                     break;
 
                 case R.string.etn_address:
                     ov._prefix = nanopoolHandler.Etn_main;
                     ov.WalletImageId = R.drawable.ic_electroneum;
                     ov.WalletShortText = "ETN";
+                    ov.WalletColorId = R.color.ETNcolor;
                     break;
 
                 default:

@@ -132,12 +132,13 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/fragment_stats_chart"
-            android:minHeight="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_width="match_parent"
             />
 
         <LinearLayout
+            android:descendantFocusability="blocksDescendants"
+            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -154,7 +155,6 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_stats_workerView"
                 android:layout_width="match_parent"
-                android:minHeight="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>
 

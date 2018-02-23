@@ -14,6 +14,7 @@ public class overview
     public int WalletId;
     public int WalletImageId;
     public String WalletShortText;
+    public int WalletColorId;
 
     public String _prefix;
     public String _address;

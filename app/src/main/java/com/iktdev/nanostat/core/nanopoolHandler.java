@@ -33,6 +33,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -122,6 +123,7 @@ public class nanopoolHandler
                         );
                         chartData.add(cd);
                     }
+                    Collections.reverse(chartData); //Nanopool echoes out in an order that conflicts with how the data is read...
                     return chartData;
                 }
             } catch (JSONException e) {

@@ -69,8 +69,9 @@ public class NanopoolStatsFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setAutoMeasureEnabled(true);
         ((RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)).setLayoutManager(linearLayoutManager);
-
+        ((RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)).setNestedScrollingEnabled(false);
 
         fetchData();
 

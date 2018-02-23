@@ -18,6 +18,7 @@ import com.iktdev.nanostat.CustomViews.CircleProgressBar;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.classes.ChartData;
 import com.iktdev.nanostat.classes.overview;
+import com.iktdev.nanostat.core.helper;
 
 import org.w3c.dom.Text;
 
@@ -69,16 +70,19 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
 
     public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(final ViewHolder holder, int position)
     {
+        helper _helper = new helper();
         overview ov = items.get(position);
         holder.walletIcon.setImageResource(ov.WalletImageId);
         holder.walletName.setText(ov.WalletShortText);
         holder.balance_valuta.setText(ov.WalletShortText);
         holder.balance.setText(decimalFormat.format(ov.Balance));
 
+
         if (ov.Balance > 0.0 && ov.PayoutLimit > 0.0)
         {
+            holder.cpb.setColor(_helper.getNonThemedColor(context, ov.WalletColorId));
             double progress = ((ov.Balance / ov.PayoutLimit)*100);
             holder.cpb.setProgressWithAnimation((float)progress);
         }
@@ -98,18 +102,30 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
             dataset.setDrawCircles(false);
             dataset.setDrawFilled(true);
             dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            dataset.setFillColor(_helper.getNonThemedColor(context, ov.WalletColorId));
+            dataset.setColor(_helper.getNonThemedColor(context, ov.WalletColorId));
+
             LineData lineData = new LineData(dataset);
+            holder.lc.setTouchEnabled(false);
             holder.lc.setData(lineData);
             holder.lc.getDescription().setEnabled(false);
-            XAxis xaxis = holder.lc.getXAxis();
-            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            holder.lc.getXAxis().setEnabled(false);
             holder.lc.getAxisRight().setEnabled(false);
+            holder.lc.getAxisLeft().setEnabled(false);
             holder.lc.setDrawMarkers(false);
             holder.lc.getAxisLeft().setDrawGridLines(false);
             holder.lc.getXAxis().setDrawGridLines(false);
-            holder.lc.getLegend().setEnabled(false);
             holder.lc.getData().setHighlightEnabled(false);
+            holder.lc.getLegend().setEnabled(false);
             holder.lc.invalidate();
+            holder.lc.setViewPortOffsets(0,0,0,0);
+            holder.lc.post(new Runnable() {
+                @Override
+                public void run() {
+                    holder.lc.invalidate();
+                }
+            });
+
         }
 
 
