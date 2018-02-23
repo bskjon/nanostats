@@ -16,6 +16,7 @@
             <RelativeLayout
                 android:layout_marginTop="4dp"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -38,6 +39,29 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginRight="12dp"
+                    android:gravity="center_vertical|right"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/adapter_overview_IconProgress"
+                    android:layout_alignBottom="@id/adapter_overview_IconProgress"
+                    android:layout_toRightOf="@id/adapter_overview_IconProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/adapter_overview_balance"
+                        android:text="#.########"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/adapter_overview_balanceValuta"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:layout_marginLeft="4dp"
+                        android:text="[###]"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
 
                 <TextView
@@ -52,6 +76,7 @@
                     android:text="###"
                     />
                 <LinearLayout
+                    android:layout_marginTop="2dp"
                     android:layout_marginLeft="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,12 +93,11 @@
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:minHeight="50dp"
-                android:layout_height="wrap_content">
+                android:layout_height="150dp">
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/adapter_overview_chart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     />
 
 

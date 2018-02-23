@@ -32,11 +32,12 @@ public class OverviewFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_overview, container, false);
     }
 
+    RecyclerView rv;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RecyclerView rv = (RecyclerView)getView().findViewById(R.id.fragment_overview_recyclerview);
+        rv = (RecyclerView)getView().findViewById(R.id.fragment_overview_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(linearLayoutManager);
@@ -68,8 +69,11 @@ public class OverviewFragment extends Fragment {
             }
         }
 
+
+        overviewAdapter adapter = new overviewAdapter(getActivity(), items);
+        rv.setAdapter(adapter);
         nanopoolHandler api = new nanopoolHandler();
-        api.applyOverview(getActivity(), items, (RecyclerView)getView().findViewById(R.id.fragment_overview_recyclerview));
+        api.applyOverview(getActivity(), items, rv);
 
 
         /*overviewAdapter adapter = new overviewAdapter(getActivity(), items);

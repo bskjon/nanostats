@@ -2,6 +2,7 @@ package com.iktdev.nanostat.classes;
 
 import com.github.mikephil.charting.data.Entry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class overview
 
     public double Balance;
     public double PayoutLimit;
-    public List<Entry> chartData;
+    public ArrayList<ChartData> chartData;
 
     public overview() {}
 

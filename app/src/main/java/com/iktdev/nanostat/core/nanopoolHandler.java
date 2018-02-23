@@ -20,6 +20,7 @@ import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.adapters.overviewAdapter;
 import com.iktdev.nanostat.adapters.workerAdpater;
 import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
+import com.iktdev.nanostat.charts.ChartValueHandler;
 import com.iktdev.nanostat.classes.ChartData;
 import com.iktdev.nanostat.classes.overview;
 
@@ -93,9 +94,9 @@ public class nanopoolHandler
 
 
 
-    public List<Entry> getChartData(final String url)
+    public ArrayList<ChartData> getChartData(final String url)
     {
-        List<Entry> entries = new ArrayList<>();
+
         final HttpHandler httpHandler = new HttpHandler();
         boolean urlAllowed = httpHandler.setUrl(url);
         if (urlAllowed)
@@ -121,26 +122,15 @@ public class nanopoolHandler
                         );
                         chartData.add(cd);
                     }
-
-                    if (chartData .size() > 0)
-                    {
-                        final long referenceTimeStamp = (chartData.get(0).date);
-                        for (ChartData data : chartData)
-                        {
-                            //entries.add(new Entry((long)data.date, data.shares));
-                            entries.add(new Entry(chartData.indexOf(data), data.shares));
-                        }
-                    }
-
-
+                    return chartData;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                return entries;
+                return null;
             }
 
         }
-        return entries;
+        return null;
     }
     public double getPayoutLimit(String url)
     {
@@ -205,41 +195,54 @@ public class nanopoolHandler
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                List<Entry> entries = getChartData(url);
-                LineDataSet dataset = new LineDataSet(entries, "Shares");
-                dataset.setDrawValues(false);
-                dataset.setDrawCircleHole(false);
-                dataset.setDrawCircles(false);
+                ArrayList<ChartData> chartData = getChartData(url);
+                List<Entry> entries = new ArrayList<>();
+                if (chartData != null && chartData.size() > 0)
+                {
+                    final long referenceTimeStamp = (chartData.get(0).date);
+                    for (ChartData data : chartData)
+                    {
+                        //entries.add(new Entry((long)data.date, data.shares));
+                        entries.add(new Entry(chartData.indexOf(data), data.shares));
+                    }
+                    LineDataSet dataset = new LineDataSet(entries, "Shares");
+                    dataset.setDrawValues(false);
+                    dataset.setDrawCircleHole(false);
+                    dataset.setDrawCircles(false);
 
 
 
-                dataset.setDrawFilled(true);
-                //dataset.setFillColor(R.color.testColor);
-                dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                    dataset.setDrawFilled(true);
+                    //dataset.setFillColor(R.color.testColor);
+                    dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-                final LineData lineData = new LineData(dataset);
+                    final LineData lineData = new LineData(dataset);
 
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        chart.setData(lineData);
-                        chart.getDescription().setEnabled(false);
-                        XAxis xaxis = chart.getXAxis();
-                        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                        chart.getAxisRight().setEnabled(false);
-                        chart.setDrawMarkers(false);
-                        chart.getAxisLeft().setDrawGridLines(false);
-                        chart.getXAxis().setDrawGridLines(false);
-                        chart.getLegend().setEnabled(false);
-                        chart.getData().setHighlightEnabled(false);
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            chart.setData(lineData);
+                            chart.getDescription().setEnabled(false);
+                            XAxis xaxis = chart.getXAxis();
+                            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                            chart.getAxisRight().setEnabled(false);
+                            chart.setDrawMarkers(false);
+                            chart.getAxisLeft().setDrawGridLines(false);
+                            chart.getXAxis().setDrawGridLines(false);
+                            chart.getLegend().setEnabled(false);
+                            chart.getData().setHighlightEnabled(false);
                                         /*ChartAxisValueFormatter cavf = new ChartAxisValueFormatter(referenceTimeStamp);
                                         XAxis xAxis = chart.getXAxis();
                                         xAxis.setValueFormatter(cavf);*/
 
 
-                        chart.invalidate();
-                    }
-                });
+                            chart.invalidate();
+                        }
+                    });
+                }
+
+
+
             }
         });
 
@@ -312,15 +315,34 @@ public class nanopoolHandler
                     overview nov = ovs.get(i);
                     nov.Balance = getBalance(balance(ovs.get(i)._prefix, ovs.get(i)._address));
                     nov.PayoutLimit = getPayoutLimit(payoutlimit(ovs.get(i)._prefix, ovs.get(i)._address));
-                    nov.chartData = getChartData(hashratechart(ovs.get(i)._prefix, ovs.get(i)._address));
+
+                    ArrayList<ChartData> chartData = getChartData(hashratechart(ovs.get(i)._prefix, ovs.get(i)._address));
+                    if (chartData != null && chartData.size() > 0)
+                    {
+                        ChartValueHandler cvh = new ChartValueHandler();
+                        chartData = cvh.getPastDay(chartData);
+                        nov.chartData = chartData;
+                    }
+
+
+
                     ov.add(nov);
                 }
 
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        overviewAdapter adapter = new overviewAdapter(context, ov);
-                        rv.setAdapter(adapter);
+                        overviewAdapter adapter = (overviewAdapter) rv.getAdapter();
+                        if (adapter != null)
+                        {
+                            adapter.replaceItems(ov);
+                        }
+                        else
+                        {
+                            adapter = new overviewAdapter(context, ov);
+                            rv.setAdapter(adapter);
+                        }
+
                     }
                 });
 
