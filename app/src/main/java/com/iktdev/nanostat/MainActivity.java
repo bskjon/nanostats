@@ -96,7 +96,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         SharedPreferencesHandler sph = new SharedPreferencesHandler();
 
-        if (id == R.id.nav_eth)
+        if (id == R.id.nav_overview)
+        {
+            setVisibleFragment((Fragment) new OverviewFragment());
+        }
+        else if (id == R.id.nav_eth)
         {
             String address = sph.getString(this, R.string.eth_address);
             if (address != null)

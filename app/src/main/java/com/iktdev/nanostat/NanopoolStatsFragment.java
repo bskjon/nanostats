@@ -142,7 +142,7 @@ public class NanopoolStatsFragment extends Fragment {
 
     private void CallApis(String main)
     {
-        apiHandler.getGeneral(getActivity(),
+        apiHandler.applyGeneralInfo(getActivity(),
                 apiHandler.general(main, wallet),
                 ccv,
                 (TextView)getView().findViewById(R.id.fragment_stats_balance),
@@ -150,11 +150,11 @@ public class NanopoolStatsFragment extends Fragment {
                 (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
                 (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
         );
-        apiHandler.getChartData(getActivity(),
+        apiHandler.applyChartData(getActivity(),
                 apiHandler.hashratechart(main, wallet),
                 (LineChart)getView().findViewById(R.id.fragment_stats_chart)
         );
-        apiHandler.getPayoutLimit(getActivity(),
+        apiHandler.applyPayoutLimit(getActivity(),
                 apiHandler.payoutlimit(main, wallet),
                 ccv,
                 (TextView)getView().findViewById(R.id.fragment_stats_payoutLimit)

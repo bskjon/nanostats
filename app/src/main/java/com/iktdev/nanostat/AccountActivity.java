@@ -199,28 +199,36 @@ public class AccountActivity extends AppCompatActivity {
     public void showInputDialog(final int addressType, String failedInput)
     {
 
+        String WalletTypeText = "";
         switch (addressType)
         {
             case R.string.eth_address:
                 prefix = nanopoolHandler.Eth_main;
+                WalletTypeText = "ETH";
                 break;
             case R.string.etc_address:
                 prefix = nanopoolHandler.Etc_main;
+                WalletTypeText = "ETC";
                 break;
             case R.string.sia_address:
                 prefix = nanopoolHandler.Sia_main;
+                WalletTypeText = "SIA";
                 break;
             case R.string.xmr_address:
                 prefix = nanopoolHandler.Xmr_main;
+                WalletTypeText = "XMR";
                 break;
             case R.string.pasc_address:
                 prefix = nanopoolHandler.Pasc_main;
+                WalletTypeText = "PASC";
                 break;
             case R.string.etn_address:
                 prefix = nanopoolHandler.Etn_main;
+                WalletTypeText = "ETN";
                 break;
             case R.string.zec_address:
                 prefix = nanopoolHandler.Zec_main;
+                WalletTypeText = "ZEC";
                 break;
         }
         //LayoutInflater li = LayoutInflater.from(this);
@@ -235,8 +243,8 @@ public class AccountActivity extends AppCompatActivity {
         }
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Insert your wallet address");
-        //dialog.setMessage();
+        dialog.setTitle(R.string.AccountActivity_AddWalletTitle);
+        dialog.setMessage(getString(R.string.AccountActivity_AddWalletMessage_P1) + " " + WalletTypeText + " " + getString(R.string.AccountActivity_AddWalletMessage_P2));
         dialog.setView(input);
         dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
@@ -245,8 +253,8 @@ public class AccountActivity extends AppCompatActivity {
                 final String textIn = input.getText().toString();
 
                 final ProgressDialog pd = new ProgressDialog(AccountActivity.this);
-                pd.setTitle("Checking account");
-                pd.setMessage("Checking if your account exists in Nanopool");
+                pd.setTitle(R.string.AccountActivity_CheckingAccount_ProgressDialogTitle);
+                pd.setMessage(AccountActivity.this.getString(R.string.AccountActivity_CheckingAccount_ProgressDialogMessage));
                 pd.show();
 
                 AsyncTask.execute(new Runnable() {

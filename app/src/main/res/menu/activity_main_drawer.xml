@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_overview"
+            android:title="Overview"
+            />
+        <item
             android:id="@+id/nav_eth"
             android:icon="@drawable/ic_etherum"
             android:title="Etherum" />

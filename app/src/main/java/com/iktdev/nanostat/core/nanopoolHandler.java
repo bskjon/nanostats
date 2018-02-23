@@ -17,8 +17,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.iktdev.nanostat.R;
+import com.iktdev.nanostat.adapters.overviewAdapter;
 import com.iktdev.nanostat.adapters.workerAdpater;
 import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
+import com.iktdev.nanostat.classes.ChartData;
+import com.iktdev.nanostat.classes.overview;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,54 +60,123 @@ public class nanopoolHandler
     public String payoutlimit(String prefix, String Address) { return  prefix + "usersettings/" + Address; }
 
     public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
-    public boolean getBalance(final Activity context, final TextView balanceTextView, String url, final currentCryptoValues cryptoValues)
+
+    public double getBalance(String url)
     {
         final HttpHandler httpHandler = new HttpHandler();
         boolean urlAllowd = httpHandler.setUrl(url);
         if(urlAllowd)
         {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run()
-                {
-                    String res = httpHandler.getApiResponse(httpHandler.getUrl());
-                    String current_balance = getJSONField(res, "data");
+            String res = httpHandler.getApiResponse(httpHandler.getUrl());
+            String current_balance = getJSONField(res, "data");
 
 
-                    final double value = Double.valueOf(current_balance);
-                    final String thisBalance = decimalFormat.format(value);
-
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            balanceTextView.setText(String.valueOf(thisBalance));
-                            cryptoValues.setBalance(value);
-                        }
-                    });
-                }
-            });
-            return true;
+            return Double.valueOf(current_balance);
+            //return decimalFormat.format(value);
         }
-        return false;
+        return -1;
     }
-    public boolean getGeneral(final Activity context, String url, final currentCryptoValues cryptoValues, final TextView balance, final TextView unconfirmed_balance, final TextView hashrate, final RecyclerView recyclerView)
+    public generalInfo getGeneral(String url)
     {
+        HttpHandler httpHandler = new HttpHandler();
+        boolean urlAllowed = httpHandler.setUrl(url);
+        if (urlAllowed)
+        {
+            String apiRes = httpHandler.getApiResponse(httpHandler.getUrl());
+            generalInfo gi = new generalInfo();
+            gi.setDataFromJsonString(apiRes);
+            return gi;
+        }
+        return null;
+    }
+
+
+
+
+    public List<Entry> getChartData(final String url)
+    {
+        List<Entry> entries = new ArrayList<>();
         final HttpHandler httpHandler = new HttpHandler();
         boolean urlAllowed = httpHandler.setUrl(url);
         if (urlAllowed)
         {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run()
+            String apiRes = httpHandler.getApiResponse(httpHandler.getUrl());
+            try
+            {
+                JSONObject main = new JSONObject(apiRes);
+                Boolean allowed = main.getBoolean("status");
+                if (allowed)
                 {
-                    final String apiRes = httpHandler.getApiResponse(httpHandler.getUrl());
-                    final generalInfo gi = new generalInfo();
-                    gi.setDataFromJsonString(apiRes);
+                    ArrayList<ChartData> chartData = new ArrayList<>();
+                    JSONArray ja = main.getJSONArray("data");
+                    for (int i = 0; i < ja.length(); i++)
+                    {
+                        JSONObject jo = ja.getJSONObject(i);
+                        ChartData cd = new ChartData(
+                                //new Date(jo.getInt("date")),
+                                //BigDecimal.valueOf(jo.getDouble("date")).floatValue(),
+                                jo.getLong("date"),
+                                jo.getInt("shares"),
+                                jo.getDouble("hashrate")
+                        );
+                        chartData.add(cd);
+                    }
 
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    if (chartData .size() > 0)
+                    {
+                        final long referenceTimeStamp = (chartData.get(0).date);
+                        for (ChartData data : chartData)
+                        {
+                            //entries.add(new Entry((long)data.date, data.shares));
+                            entries.add(new Entry(chartData.indexOf(data), data.shares));
+                        }
+                    }
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return entries;
+            }
+
+        }
+        return entries;
+    }
+    public double getPayoutLimit(String url)
+    {
+        final HttpHandler httpHandler = new HttpHandler();
+        boolean urlAllowed = httpHandler.setUrl(url);
+
+        if (urlAllowed)
+        {
+            String res = httpHandler.getApiResponse(httpHandler.getUrl());
+            try {
+                JSONObject main = new JSONObject(res);
+                JSONObject data = main.getJSONObject("data");
+                final double payoutLimit = data.getDouble("payout");
+                if (payoutLimit != 0.0)
+                {
+                    return payoutLimit;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
+    public void applyGeneralInfo(final Activity context, final String url, final currentCryptoValues cryptoValues, final TextView balance, final TextView unconfirmed_balance, final TextView hashrate, final RecyclerView recyclerView)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                final generalInfo gi = getGeneral(url);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (gi != null)
+                        {
                             cryptoValues.setBalance(gi._balance);
                             balance.setText(gi.balance);
                             unconfirmed_balance.setText("+ " + gi.unconfirmed_balance);
@@ -113,140 +185,147 @@ public class nanopoolHandler
                             recyclerView.setHasFixedSize(true);
                             com.iktdev.nanostat.adapters.workerAdpater adapter = new workerAdpater(context, gi.workersList);
                             recyclerView.setAdapter(adapter);
-                            //recyclerView
-
                         }
-                    });
-                }
-            });
-            return true;
-        }
-        return false;
-    }
-    public boolean getChartData(final Activity context, final String url, final LineChart chart)
-    {
-        final HttpHandler httpHandler = new HttpHandler();
-        boolean urlAllowed = httpHandler.setUrl(url);
-        if (urlAllowed)
-        {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run()
-                {
-                    String apiRes = httpHandler.getApiResponse(httpHandler.getUrl());
-                    try {
-                        JSONObject main = new JSONObject(apiRes);
-                        Boolean allowed = main.getBoolean("status");
-                        if (allowed)
+                        else
                         {
-                            ArrayList<ChartData> chartData = new ArrayList<>();
-                            JSONArray ja = main.getJSONArray("data");
-                            for (int i = 0; i < ja.length(); i++)
-                            {
-                                JSONObject jo = ja.getJSONObject(i);
-                                ChartData cd = new ChartData(
-                                        //new Date(jo.getInt("date")),
-                                        //BigDecimal.valueOf(jo.getDouble("date")).floatValue(),
-                                        jo.getLong("date"),
-                                        jo.getInt("shares"),
-                                        jo.getDouble("hashrate")
-                                );
-                                chartData.add(cd);
-                            }
+                            balance.setText("Unexpected error, value -2");
+                            unconfirmed_balance.setText("Unexpected error, value -2");
+                            hashrate.setText("Unexpected error, value -2");
+                        }
+                        //recyclerView
 
-                            if (chartData .size() > 0)
-                            {
-                                final long referenceTimeStamp = (chartData.get(0).date);
-                                List<Entry> entries = new ArrayList<>();
-                                for (ChartData data : chartData)
-                                {
-                                    //entries.add(new Entry((long)data.date, data.shares));
-                                    entries.add(new Entry(chartData.indexOf(data), data.shares));
-                                }
-                                LineDataSet dataset = new LineDataSet(entries, "Shares");
-                                dataset.setDrawValues(false);
-                                dataset.setDrawCircleHole(false);
-                                dataset.setDrawCircles(false);
+                    }
+                });
+            }
+        });
+    }
+
+    public void applyChartData(final Activity context, final String url, final LineChart chart)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Entry> entries = getChartData(url);
+                LineDataSet dataset = new LineDataSet(entries, "Shares");
+                dataset.setDrawValues(false);
+                dataset.setDrawCircleHole(false);
+                dataset.setDrawCircles(false);
 
 
 
-                                dataset.setDrawFilled(true);
-                                //dataset.setFillColor(R.color.testColor);
-                                dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                dataset.setDrawFilled(true);
+                //dataset.setFillColor(R.color.testColor);
+                dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-                                final LineData lineData = new LineData(dataset);
+                final LineData lineData = new LineData(dataset);
 
-                                context.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        chart.setData(lineData);
-                                        chart.getDescription().setEnabled(false);
-                                        XAxis xaxis = chart.getXAxis();
-                                        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                                        chart.getAxisRight().setEnabled(false);
-                                        chart.setDrawMarkers(false);
-                                        chart.getAxisLeft().setDrawGridLines(false);
-                                        chart.getXAxis().setDrawGridLines(false);
-                                        chart.getLegend().setEnabled(false);
-                                        chart.getData().setHighlightEnabled(false);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        chart.setData(lineData);
+                        chart.getDescription().setEnabled(false);
+                        XAxis xaxis = chart.getXAxis();
+                        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        chart.getAxisRight().setEnabled(false);
+                        chart.setDrawMarkers(false);
+                        chart.getAxisLeft().setDrawGridLines(false);
+                        chart.getXAxis().setDrawGridLines(false);
+                        chart.getLegend().setEnabled(false);
+                        chart.getData().setHighlightEnabled(false);
                                         /*ChartAxisValueFormatter cavf = new ChartAxisValueFormatter(referenceTimeStamp);
                                         XAxis xAxis = chart.getXAxis();
                                         xAxis.setValueFormatter(cavf);*/
 
 
-                                        chart.invalidate();
-                                    }
-                                });
-
-
-                            }
-
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        chart.invalidate();
                     }
+                });
+            }
+        });
 
-
-                }
-            });
-            return true;
-        }
-        return false;
     }
-    public boolean getPayoutLimit(final Activity context , final String url, final currentCryptoValues cryptoValues, final TextView payoutText)
-    {
-        final HttpHandler httpHandler = new HttpHandler();
-        boolean urlAllowed = httpHandler.setUrl(url);
-        if (urlAllowed)
-        {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    String res = httpHandler.getApiResponse(httpHandler.getUrl());
-                    try {
-                        JSONObject main = new JSONObject(res);
-                        JSONObject data = main.getJSONObject("data");
-                        final double payoutLimit = data.getDouble("payout");
-                        if (payoutLimit != 0.0)
-                        {
-                            cryptoValues.setPayoutLimit(payoutLimit);
-                            context.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    payoutText.setText(String.valueOf(payoutLimit));
-                                }
-                            });
-                        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+    public void applyPayoutLimit(final Activity context , final String url, final currentCryptoValues cryptoValues, final TextView payoutText)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                final double response = getPayoutLimit(url);
+                cryptoValues.setPayoutLimit(response);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        if (response != -1)
+                        {
+                            payoutText.setText(String.valueOf(response));
+                            cryptoValues.setPayoutLimit(response);
+                        }
+                        else
+                            payoutText.setText("Unexpected error, value -1");
+
+
                     }
+                });
+            }
+        });
+    }
+
+    public void applyBalance(final Activity context, final TextView balanceTextView, final String url, final currentCryptoValues cryptoValues)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run()
+            {
+                final double response = getBalance(url);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (response != -1)
+                        {
+                            balanceTextView.setText(decimalFormat.format(response));
+                            cryptoValues.setBalance(response);
+                        }
+                        else
+                            balanceTextView.setText("Unexpected error, value -1");
+
+                        
+                    }
+                });
+
+            }
+        });
+    }
+
+
+    public void applyOverview(final Activity context, final ArrayList<overview> ovs, final RecyclerView rv)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run()
+            {
+                final ArrayList<overview> ov = new ArrayList<>();
+                for (int i = 0; i < ovs.size(); i++)
+                {
+                    overview nov = ovs.get(i);
+                    nov.Balance = getBalance(balance(ovs.get(i)._prefix, ovs.get(i)._address));
+                    nov.PayoutLimit = getPayoutLimit(payoutlimit(ovs.get(i)._prefix, ovs.get(i)._address));
+                    nov.chartData = getChartData(hashratechart(ovs.get(i)._prefix, ovs.get(i)._address));
+                    ov.add(nov);
                 }
-            });
-            return true;
-        }
-        return false;
+
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        overviewAdapter adapter = new overviewAdapter(context, ov);
+                        rv.setAdapter(adapter);
+                    }
+                });
+
+            }
+        });
     }
 
 
@@ -365,20 +444,6 @@ public class nanopoolHandler
 
 
 
-    }
-
-    public class ChartData
-    {
-        public long date;
-        public int shares;
-        public double hashrate;
-
-        public ChartData(long date, int shares, double hashrate)
-        {
-            this.date = date*1000;
-            this.shares = shares;
-            this.hashrate = hashrate;
-        }
     }
 
 }
