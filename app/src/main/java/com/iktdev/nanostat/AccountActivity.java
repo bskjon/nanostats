@@ -149,43 +149,43 @@ public class AccountActivity extends AppCompatActivity {
             switch (id)
             {
                 case R.string.zec_address:
-                    ac.ReadableWalletType = "ZCash";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_ZEC);
                     ac.WalletImageId = R.drawable.ic_zcash;
                     ac.Address = address;
                     break;
 
                 case R.string.eth_address:
-                    ac.ReadableWalletType = "Etherum";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_ETH);
                     ac.WalletImageId = R.drawable.ic_etherum;
                     ac.Address = address;
-                    break;
+                    break; 
 
                 case R.string.etc_address:
-                    ac.ReadableWalletType = "Etherum Classic";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_ETC);
                     ac.WalletImageId = R.drawable.ic_etherum_classic;
                     ac.Address = address;
                     break;
 
                 case R.string.sia_address:
-                    ac.ReadableWalletType = "SiaCoin";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_SIA);
                     ac.WalletImageId = R.drawable.ic_siacoin;
                     ac.Address = address;
                     break;
 
                 case R.string.xmr_address:
-                    ac.ReadableWalletType = "Monero";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_XMR);
                     ac.WalletImageId = R.drawable.ic_monero;
                     ac.Address = address;
                     break;
 
                 case R.string.pasc_address:
-                    ac.ReadableWalletType = "Pascal";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_PASC);
                     ac.WalletImageId = R.drawable.ic_pascal;
                     ac.Address = address;
                     break;
 
                 case R.string.etn_address:
-                    ac.ReadableWalletType = "Electroneum";
+                    ac.ReadableWalletType = getString(R.string.cryptoName_ETN);
                     ac.WalletImageId = R.drawable.ic_electroneum;
                     ac.Address = address;
                     break;

@@ -8,6 +8,7 @@ public class account
 {
     public int WalletRid;
     public int WalletImageId;
+    public int WalletColorId;
     public String Address;
     public String ReadableWalletType;
 }

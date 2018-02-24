@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,26 +14,27 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iktdev.nanostat.AccountActivity;
+import com.iktdev.nanostat.DonateActivity;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.classes.account;
-import com.iktdev.nanostat.core.SharedPreferencesHandler;
+import com.iktdev.nanostat.core.helper;
 
 import java.util.ArrayList;
 
 /**
- * Created by Brage on 21.02.2018.
+ * Created by Brage on 24.02.2018.
  */
 
-public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHolder>
+public class donateAdapter extends RecyclerView.Adapter<donateAdapter.ViewHolder>
 {
     Activity context;
     ArrayList<account> items;
 
-    public accountAdapter(Activity context, ArrayList<account> items){
+    public donateAdapter(Activity context, ArrayList<account> items){
         this.context = context;
         this.items = items;
     }
@@ -61,9 +63,9 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
 
 
     @Override
-    public accountAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_accounts, parent, false);
-        return new accountAdapter.ViewHolder(v);
+    public donateAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_donate, parent, false);
+        return new donateAdapter.ViewHolder(v);
     }
 
     @Override
@@ -73,6 +75,9 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
         holder.address.setText(ac.Address);
         holder.cryptoIcon.setImageResource(ac.WalletImageId);
         holder.cryptoName.setText(ac.ReadableWalletType);
+        helper h = new helper();
+        ((GradientDrawable)holder.rl.getBackground()).setColor(h.getNonThemedColor(context, ac.WalletColorId));
+
         final int WalletrID = ac.WalletRid;
         final String WalletType = ac.ReadableWalletType;
         final String WalletAddr = ac.Address;
@@ -81,34 +86,18 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
             public void onClick(View view)
             {
                 PopupMenu pop = new PopupMenu(context, holder.menuButton);
-                pop.inflate(R.menu.activity_account_wallet);
+                pop.inflate(R.menu.menu_donate);
                 pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem)
                     {
                         switch (menuItem.getItemId())
                         {
-                            case R.id.action_edit:
-                                if (context instanceof AccountActivity)
-                                {
-                                    ((AccountActivity) context).showInputDialog(WalletrID, WalletAddr);
-                                }
-                                break;
-
                             case R.id.action_copy:
                                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                                 ClipData clip = ClipData.newPlainText(WalletType, WalletAddr);
                                 clipboard.setPrimaryClip(clip);
                                 Toast.makeText(context, "Address copied to your clipboard", Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case R.id.action_delete:
-                                SharedPreferencesHandler sph = new SharedPreferencesHandler();
-                                sph.deleteString(context, WalletrID);
-                                if (context instanceof AccountActivity)
-                                {
-                                    ((AccountActivity) context).updateAccounts(WalletrID, WalletAddr, true);
-                                }
                                 break;
                         }
 
@@ -129,6 +118,7 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         CardView cv;
+        RelativeLayout rl;
         ImageView cryptoIcon;
         TextView cryptoName;
         TextView address;
@@ -142,6 +132,7 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
             cryptoName = (TextView)itemView.findViewById(R.id.adapter_accounts_walletType);
             address = (TextView)itemView.findViewById(R.id.adapter_accounts_walletAddress);
             menuButton = (ImageButton)itemView.findViewById(R.id.adapter_accounts_menuButton);
+            rl = (RelativeLayout)itemView.findViewById(R.id.adapter_donateIcon_background);
 
         }
     }

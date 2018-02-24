@@ -12,31 +12,31 @@
         <item
             android:id="@+id/nav_eth"
             android:icon="@drawable/ic_etherum"
-            android:title="Etherum" />
+            android:title="@string/cryptoName_ETH" />
         <item
             android:id="@+id/nav_etc"
             android:icon="@drawable/ic_etherum_classic"
-            android:title="Etherum Classic" />
+            android:title="@string/cryptoName_ETC" />
         <item
             android:id="@+id/nav_sia"
             android:icon="@drawable/ic_siacoin"
-            android:title="SiaCoin" />
+            android:title="@string/cryptoName_SIA" />
         <item
             android:id="@+id/nav_zec"
             android:icon="@drawable/ic_zcash"
-            android:title="ZCash" />
+            android:title="@string/cryptoName_ZEC" />
         <item
             android:id="@+id/nav_xmr"
             android:icon="@drawable/ic_monero"
-            android:title="Monero" />
+            android:title="@string/cryptoName_XMR" />
         <item
             android:id="@+id/nav_pasc"
             android:icon="@drawable/ic_pascal"
-            android:title="Pascal" />
+            android:title="@string/cryptoName_PASC" />
         <item
             android:id="@+id/nav_etn"
             android:icon="@drawable/ic_electroneum"
-            android:title="Electroneum" />
+            android:title="@string/cryptoName_ETN" />
     </group>
 
     <item android:title="Accounting">

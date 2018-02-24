@@ -25,4 +25,13 @@
     <color name="ETNcolor">#FF101010</color>
     <color name="PASCcolor">#FFffaa00</color>
 
+    <color name="BTC_background">#FFffb119</color>
+    <color name="BCH_background">#8dc451</color>
+    <color name="ETH_background">#FF6f7cba</color>
+    <color name="ETC_background">#FF669073</color>
+    <color name="LTC_background">#FFb5b5b5</color>
+    <color name="ZEC_background">#FF221f53</color>
+    <color name="XMR_background">#FF4c4c4c</color>
+
+
 </resources>
