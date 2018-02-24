@@ -67,24 +67,23 @@
 
 
                 <TextView
-                    android:id="@+id/adapter_overview_WalletType"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/adapter_overview_SharesDesc"
                     android:layout_below="@id/adapter_overview_IconProgress"
-                    android:layout_alignLeft="@id/adapter_overview_IconProgress"
-                    android:layout_alignRight="@id/adapter_overview_IconProgress"
+                    android:textSize="10dp"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                    android:text="###"
+                    android:text="SHARES PAST DAY"
                     />
                 <LinearLayout
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/adapter_overview_WalletType"
-                    android:layout_alignTop="@id/adapter_overview_WalletType"
-                    android:layout_alignBottom="@id/adapter_overview_WalletType">
+                    android:layout_toRightOf="@id/adapter_overview_SharesDesc"
+                    android:layout_alignTop="@id/adapter_overview_SharesDesc"
+                    android:layout_alignBottom="@id/adapter_overview_SharesDesc">
                     <View
                         android:layout_gravity="center_vertical"
                         android:background="#000"

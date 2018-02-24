@@ -54,6 +54,7 @@ public class accountAdapter extends RecyclerView.Adapter<accountAdapter.ViewHold
     public void updateItem(int position, String nAddress)
     {
         this.items.get(position).Address = nAddress;
+        notifyDataSetChanged();
     }
 
 

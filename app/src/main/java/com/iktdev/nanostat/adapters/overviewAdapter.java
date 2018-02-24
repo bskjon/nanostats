@@ -75,7 +75,6 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
         helper _helper = new helper();
         overview ov = items.get(position);
         holder.walletIcon.setImageResource(ov.WalletImageId);
-        holder.walletName.setText(ov.WalletShortText);
         holder.balance_valuta.setText(ov.WalletShortText);
         holder.balance.setText(decimalFormat.format(ov.Balance));
 
@@ -144,7 +143,6 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
         CardView cv;
         LineChart lc;
         ImageView walletIcon;
-        TextView walletName;
         CircleProgressBar cpb;
         TextView balance;
         TextView balance_valuta;
@@ -155,7 +153,6 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
             cv = (CardView)itemView.findViewById(R.id.adapter_overview_card);
             walletIcon = (ImageView)itemView.findViewById(R.id.adapter_overview_Icon);
             cpb = (CircleProgressBar)itemView.findViewById(R.id.adapter_overview_Progress);
-            walletName = (TextView)itemView.findViewById(R.id.adapter_overview_WalletType);
             lc = (LineChart)itemView.findViewById(R.id.adapter_overview_chart);
             balance = (TextView)itemView.findViewById(R.id.adapter_overview_balance);
             balance_valuta = (TextView)itemView.findViewById(R.id.adapter_overview_balanceValuta);

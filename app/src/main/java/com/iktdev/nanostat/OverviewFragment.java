@@ -43,7 +43,26 @@ public class OverviewFragment extends Fragment {
         rv.setLayoutManager(linearLayoutManager);
 
         rv.setHasFixedSize(false);
-        setValue();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        rv = (RecyclerView)getView().findViewById(R.id.fragment_overview_recyclerview);
+        overviewAdapter adapter = (overviewAdapter) rv.getAdapter();
+        if (adapter == null)
+        {
+            setValue();
+        }
+        else
+        {
+            rv.setAdapter(null);
+            setValue();
+        }
+
+
+
+
     }
 
     public void setValue()

@@ -69,11 +69,20 @@ public class nanopoolHandler
         boolean urlAllowd = httpHandler.setUrl(url);
         if(urlAllowd)
         {
+            String current_balance = "0.0";
             String res = httpHandler.getApiResponse(httpHandler.getUrl());
-            String current_balance = getJSONField(res, "data");
+            if (res != null && res.length() > 0)
+            {
+                current_balance = getJSONField(res, "data");
+            }
 
+            if (current_balance != null)
+            {
+                return Double.valueOf(current_balance);
+            }
+            else
+                return 0.0;
 
-            return Double.valueOf(current_balance);
             //return decimalFormat.format(value);
         }
         return -1;

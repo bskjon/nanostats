@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class AccountActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE = 10;
+    public static final int CAMERA_PERMISSION_REQUEST = 30;
+
 
     private boolean Address_Passed = false;
 
@@ -196,6 +201,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private String prefix = "";
     private boolean Accountcheck_status = false;
+    private int CurrentWalletId = -1;
     public void showInputDialog(final int addressType, String failedInput)
     {
 
@@ -302,11 +308,32 @@ public class AccountActivity extends AppCompatActivity {
                         pd.dismiss();
                     }
                 });
+                CurrentWalletId = -1;
             }
         });
+
+        dialog.setNeutralButton("Scan code", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                CurrentWalletId = addressType;
+                if (ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(AccountActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST);
+                }
+                else
+                {
+                    Intent intent = new Intent(AccountActivity.this, ScanActivity.class);
+                    intent.putExtra("WalletId", addressType);
+                    startActivityForResult(intent, REQUEST_CODE);
+                }
+            }
+        });
+
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                CurrentWalletId = -1;
                 dialogInterface.dismiss();
                 if (Address_Passed)
                     AccountActivity.super.onBackPressed();
@@ -483,8 +510,6 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void closeFABMenu(){
 
         isFabOpen = false;
@@ -534,9 +559,43 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            if (data != null)
+            {
+                Barcode barcode = data.getParcelableExtra("barcode");
+                int WalletType = data.getIntExtra("WalletId", -1);
+                if (WalletType != -1)
+                    showInputDialog(WalletType, barcode.displayValue);
+
+                Toast.makeText(AccountActivity.this, "Data read: " + barcode.displayValue, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if (ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+        {
+            Intent intent = new Intent(AccountActivity.this, ScanActivity.class);
+            intent.putExtra("WalletId", CurrentWalletId);
+            startActivityForResult(intent, REQUEST_CODE);
+        }
 
+    }
+
+
+
+
+
+
+
+
+    @Override
     public void onBackPressed() {
 
         if(isFabOpen){
