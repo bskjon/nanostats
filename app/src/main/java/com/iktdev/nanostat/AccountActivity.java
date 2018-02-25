@@ -158,7 +158,7 @@ public class AccountActivity extends AppCompatActivity {
                     ac.ReadableWalletType = getString(R.string.cryptoName_ETH);
                     ac.WalletImageId = R.drawable.ic_etherum;
                     ac.Address = address;
-                    break; 
+                    break;
 
                 case R.string.etc_address:
                     ac.ReadableWalletType = getString(R.string.cryptoName_ETC);
@@ -204,6 +204,10 @@ public class AccountActivity extends AppCompatActivity {
     private int CurrentWalletId = -1;
     public void showInputDialog(final int addressType, String failedInput)
     {
+        if (isFabOpen)
+            closeFABMenu();
+
+
 
         String WalletTypeText = "";
         switch (addressType)
@@ -571,7 +575,7 @@ public class AccountActivity extends AppCompatActivity {
                 if (WalletType != -1)
                     showInputDialog(WalletType, barcode.displayValue);
 
-                Toast.makeText(AccountActivity.this, "Data read: " + barcode.displayValue, Toast.LENGTH_LONG).show();
+                //Toast.makeText(AccountActivity.this, "Data read: " + barcode.displayValue, Toast.LENGTH_LONG).show();
             }
         }
     }

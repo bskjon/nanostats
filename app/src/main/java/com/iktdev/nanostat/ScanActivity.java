@@ -40,7 +40,7 @@ public class ScanActivity extends AppCompatActivity {
                 .build();
         if (!detector.isOperational())
         {
-            Toast.makeText(this, "An error occured while attempting to init scanner", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Couldn't initialize scanner, please make sure you have Google services installed", Toast.LENGTH_LONG).show();
             super.onBackPressed();
             this.finish();
         }

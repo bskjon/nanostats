@@ -38,5 +38,12 @@ public class currentCryptoValues
     public double getBalance() { return this.Balance;}
     public Date getBalance_changed() { return this.Balance_changed; }
 
+    public void reset()
+    {
+        Balance_changed = null;
+        PayoutLimit_changed = null;
+        Balance = 0.0d;
+        PayoutLimit = 0.0d;
+    }
 
 }

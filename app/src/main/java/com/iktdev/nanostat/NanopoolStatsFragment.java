@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.iktdev.nanostat.CustomViews.CircleProgressBar;
 import com.iktdev.nanostat.core.HttpHandler;
 import com.iktdev.nanostat.core.currentCryptoValues;
+import com.iktdev.nanostat.core.helper;
 import com.iktdev.nanostat.core.nanopoolHandler;
 
 import org.w3c.dom.Text;
@@ -33,6 +35,7 @@ import java.util.Set;
 
 public class NanopoolStatsFragment extends Fragment {
 
+    private SwipeRefreshLayout refreshLayout;
     private int crypto  = -1;
     private String wallet = "";
 
@@ -57,7 +60,7 @@ public class NanopoolStatsFragment extends Fragment {
         Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         //getView().setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +68,19 @@ public class NanopoolStatsFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
+        */
+
+        refreshLayout = (SwipeRefreshLayout)getView().findViewById(R.id.fragment_stats_pullToRefresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                UpdateData();
+            }
+        });
+
+
+
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -80,6 +96,8 @@ public class NanopoolStatsFragment extends Fragment {
     private HttpHandler httpHandler = null;
     private nanopoolHandler apiHandler = null;
     public currentCryptoValues ccv;
+    private String prefix;
+    private int ColorId;
     public void fetchData()
     {
         if (apiHandler == null)
@@ -90,45 +108,45 @@ public class NanopoolStatsFragment extends Fragment {
         switch (crypto)
         {
             case R.string.eth_address:
-                SetDefaults(R.drawable.ic_etherum, "ETH", "Mh/s");
-                CallApis(nanopoolHandler.Eth_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_etherum, "ETH", "Mh/s", R.color.ETHcolor);
+                CallApis(nanopoolHandler.Eth_main, R.color.ETHcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.etc_address:
-                SetDefaults(R.drawable.ic_etherum_classic, "ETC", "Mh/s");
-                CallApis(nanopoolHandler.Etc_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_etherum_classic, "ETC", "Mh/s", R.color.ETCcolor);
+                CallApis(nanopoolHandler.Etc_main, R.color.ETCcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.sia_address:
-                SetDefaults(R.drawable.ic_siacoin, "SIA", "Mh/s");
-                CallApis(nanopoolHandler.Sia_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_siacoin, "SIA", "Mh/s", R.color.SIAcolor);
+                CallApis(nanopoolHandler.Sia_main, R.color.SIAcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.zec_address:
-                SetDefaults(R.drawable.ic_zcash, "ZEC", "Sol/s");
-                CallApis(nanopoolHandler.Zec_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_zcash, "ZEC", "Sol/s", R.color.ZECcolor);
+                CallApis(nanopoolHandler.Zec_main, R.color.ZECcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.xmr_address:
-                SetDefaults(R.drawable.ic_monero, "XMR", "H/s");
-                CallApis(nanopoolHandler.Xmr_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_monero, "XMR", "H/s", R.color.XMRcolor);
+                CallApis(nanopoolHandler.Xmr_main, R.color.XMRcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.pasc_address:
-                SetDefaults(R.drawable.ic_pascal, "PASC", "Mh/s");
-                CallApis(nanopoolHandler.Pasc_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_pascal, "PASC", "Mh/s", R.color.PASCcolor);
+                CallApis(nanopoolHandler.Pasc_main, R.color.PASCcolor);
+                setPayoutProgress(false);
                 break;
 
             case R.string.etn_address:
-                SetDefaults(R.drawable.ic_electroneum,"ETN", "H/s");
-                CallApis(nanopoolHandler.Etn_main);
-                setPayoutProgress();
+                SetDefaults(R.drawable.ic_electroneum,"ETN", "H/s", R.color.ETNcolor);
+                CallApis(nanopoolHandler.Etn_main, R.color.ETNcolor);
+                setPayoutProgress(false);
                 break;
 
             default:
@@ -141,8 +159,11 @@ public class NanopoolStatsFragment extends Fragment {
         //Boolean setUrl = httpHandler.setUrl(nanopoolHandler.Zec.Zec_main, apiHandler.Zec. )
     }
 
-    private void CallApis(String main)
+    private void CallApis(String main, int ColorId)
     {
+        prefix = main;
+        this.ColorId = ColorId;
+
         apiHandler.applyGeneralInfo(getActivity(),
                 apiHandler.general(main, wallet),
                 ccv,
@@ -153,7 +174,8 @@ public class NanopoolStatsFragment extends Fragment {
         );
         apiHandler.applyChartData(getActivity(),
                 apiHandler.hashratechart(main, wallet),
-                (LineChart)getView().findViewById(R.id.fragment_stats_chart)
+                (LineChart)getView().findViewById(R.id.fragment_stats_chart),
+                ColorId
         );
         apiHandler.applyPayoutLimit(getActivity(),
                 apiHandler.payoutlimit(main, wallet),
@@ -163,21 +185,50 @@ public class NanopoolStatsFragment extends Fragment {
     }
 
 
+    private void UpdateData()
+    {
+        ccv.reset();
+        if (prefix != null && prefix.length() > 0)
+        {
+            apiHandler.applyGeneralInfo(getActivity(),
+                    apiHandler.general(prefix, wallet),
+                    ccv,
+                    (TextView)getView().findViewById(R.id.fragment_stats_balance),
+                    (TextView)getView().findViewById(R.id.fragment_stats_unconfirmed_balance),
+                    (TextView)getView().findViewById(R.id.fragment_stats_hashrate),
+                    (RecyclerView)getView().findViewById(R.id.fragment_stats_workerView)
+            );
+            apiHandler.applyChartData(getActivity(),
+                    apiHandler.hashratechart(prefix, wallet),
+                    (LineChart)getView().findViewById(R.id.fragment_stats_chart),
+                    ColorId
+            );
+            apiHandler.applyPayoutLimit(getActivity(),
+                    apiHandler.payoutlimit(prefix, wallet),
+                    ccv,
+                    (TextView)getView().findViewById(R.id.fragment_stats_payoutLimit)
+            );
+            setPayoutProgress(true);
+
+        }
+
+    }
 
 
 
 
-    private void SetDefaults(int Resid, String currcencyShort, String hashrateFormat)
+    private void SetDefaults(int Resid, String currcencyShort, String hashrateFormat, int ColorId)
     {
         ((ImageView)getView().findViewById(R.id.crypto_ic)).setImageResource(Resid);
         ((TextView)getView().findViewById(R.id.fragment_stats_cryptoName)).setText(currcencyShort);
         ((TextView)getView().findViewById(R.id.fragment_stats_hashrate_format)).setText(hashrateFormat);
         ((TextView)getView().findViewById(R.id.fragment_stats_cryptoNameLimit)).setText(currcencyShort);
+        ((CircleProgressBar)getView().findViewById(R.id.fragment_stats_payoutProgressBar)).setColor(new helper().getNonThemedColor(getActivity(), ColorId));
     }
 
 
 
-    public void setPayoutProgress()
+    public void setPayoutProgress(final boolean isPulledToRefresh)
     {
         final TextView payoutProgressText = (TextView)getView().findViewById(R.id.fragment_stats_progressPercent);
         final CircleProgressBar payoutProgress = getView().findViewById(R.id.fragment_stats_payoutProgressBar);
@@ -203,6 +254,8 @@ public class NanopoolStatsFragment extends Fragment {
                             payoutProgressText.setText(String.valueOf(Math.round(progress))+ "%" );
                         }
 
+                        if (isPulledToRefresh)
+                            refreshLayout.setRefreshing(false);
                     }
                 });
 

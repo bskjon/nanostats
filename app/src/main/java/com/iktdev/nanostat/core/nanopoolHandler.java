@@ -102,8 +102,6 @@ public class nanopoolHandler
     }
 
 
-
-
     public ArrayList<ChartData> getChartData(final String url)
     {
 
@@ -201,7 +199,7 @@ public class nanopoolHandler
         });
     }
 
-    public void applyChartData(final Activity context, final String url, final LineChart chart)
+    public void applyChartData(final Activity context, final String url, final LineChart chart, final int ColorId)
     {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -226,6 +224,9 @@ public class nanopoolHandler
                     dataset.setDrawFilled(true);
                     //dataset.setFillColor(R.color.testColor);
                     dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                    helper h = new helper();
+                    dataset.setColor(h.getNonThemedColor(context, ColorId));
+                    dataset.setFillColor(h.getNonThemedColor(context, ColorId));
 
                     final LineData lineData = new LineData(dataset);
 
@@ -314,33 +315,64 @@ public class nanopoolHandler
     }
 
 
+    public overviewAdapter _overviewAdapter;
     public void applyOverview(final Activity context, final ArrayList<overview> ovs, final RecyclerView rv)
     {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run()
             {
-                final ArrayList<overview> ov = new ArrayList<>();
-                for (int i = 0; i < ovs.size(); i++)
-                {
-                    overview nov = ovs.get(i);
-                    nov.Balance = getBalance(balance(ovs.get(i)._prefix, ovs.get(i)._address));
-                    nov.PayoutLimit = getPayoutLimit(payoutlimit(ovs.get(i)._prefix, ovs.get(i)._address));
-
-                    ArrayList<ChartData> chartData = getChartData(hashratechart(ovs.get(i)._prefix, ovs.get(i)._address));
-                    if (chartData != null && chartData.size() > 0)
-                    {
-                        ChartValueHandler cvh = new ChartValueHandler();
-                        chartData = cvh.getPastDay(chartData);
-                        nov.chartData = chartData;
-                    }
-
-
-
-                    ov.add(nov);
-                }
 
                 context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        _overviewAdapter = (overviewAdapter)rv.getAdapter();
+                        if (_overviewAdapter != null)
+                        {
+                            rv.setAdapter(new overviewAdapter(context, ovs));
+                            _overviewAdapter = (overviewAdapter)rv.getAdapter();
+                        }
+
+
+                        for (int i = 0; i < ovs.size(); i++)
+                        {
+                            final overview nov = ovs.get(i);
+                            final int finalId = i;
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    final int finalI = finalId;
+                                    final double _balance = getBalance(balance(ovs.get(finalI)._prefix, ovs.get(finalI)._address));
+                                    final double _payoutLimit = getPayoutLimit(payoutlimit(ovs.get(finalI)._prefix, ovs.get(finalI)._address));
+                                    final ArrayList<ChartData> chartData = getChartData(hashratechart(ovs.get(finalI)._prefix, ovs.get(finalI)._address));
+
+                                    context.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            nov.Balance = _balance;
+                                            nov.PayoutLimit = _payoutLimit;
+                                            if (chartData != null && chartData.size() > 0)
+                                            {
+                                                ChartValueHandler cvh = new ChartValueHandler();
+                                                ArrayList<ChartData> pastDayChart = cvh.getPastDay(chartData);
+                                                nov.chartData = pastDayChart;
+                                            }
+                                            _overviewAdapter.updateItem(nov, finalI);
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+
+                /*context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         overviewAdapter adapter = (overviewAdapter) rv.getAdapter();
@@ -355,7 +387,7 @@ public class nanopoolHandler
                         }
 
                     }
-                });
+                });*/
 
             }
         });

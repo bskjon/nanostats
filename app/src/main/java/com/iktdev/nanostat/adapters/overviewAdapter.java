@@ -53,11 +53,19 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
         return true;
     }
 
+    public void addItem(overview item)
+    {
+        this.items.add(item);
+        notifyDataSetChanged();
+    }
+
+
     public boolean updateItem(overview item, int position)
     {
         overview ov = this.items.get(position);
         ov = item;
         notifyDataSetChanged();
+        this.notifyItemChanged(position);
         return true;
 
     }
@@ -69,6 +77,7 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
     }
 
     public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
@@ -76,8 +85,8 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
         overview ov = items.get(position);
         holder.walletIcon.setImageResource(ov.WalletImageId);
         holder.balance_valuta.setText(ov.WalletShortText);
-        holder.balance.setText(decimalFormat.format(ov.Balance));
 
+        holder.balance.setText(decimalFormat.format(ov.Balance));
 
         if (ov.Balance > 0.0 && ov.PayoutLimit > 0.0)
         {
@@ -95,18 +104,8 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
                 //entries.add(new Entry((long)data.date, data.shares));
                 entryList.add(new Entry(ov.chartData.indexOf(data), data.shares));
             }
-            LineDataSet dataset = new LineDataSet(entryList, "Shares");
-            dataset.setDrawValues(false);
-            dataset.setDrawCircleHole(false);
-            dataset.setDrawCircles(false);
-            dataset.setDrawFilled(true);
-            dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            dataset.setFillColor(_helper.getNonThemedColor(context, ov.WalletColorId));
-            dataset.setColor(_helper.getNonThemedColor(context, ov.WalletColorId));
-
-            LineData lineData = new LineData(dataset);
             holder.lc.setTouchEnabled(false);
-            holder.lc.setData(lineData);
+            holder.lc.setData(getLineData( new LineDataSet(entryList, "Shares"), _helper, ov));
             holder.lc.getDescription().setEnabled(false);
             holder.lc.getXAxis().setEnabled(false);
             holder.lc.getAxisRight().setEnabled(false);
@@ -126,10 +125,19 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
             });
 
         }
+    }
 
+    private LineData getLineData(LineDataSet dataset, helper _helper, overview ov)
+    {
+        dataset.setDrawValues(false);
+        dataset.setDrawCircleHole(false);
+        dataset.setDrawCircles(false);
+        dataset.setDrawFilled(true);
+        dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataset.setFillColor(_helper.getNonThemedColor(context, ov.WalletColorId));
+        dataset.setColor(_helper.getNonThemedColor(context, ov.WalletColorId));
 
-
-
+        return new LineData(dataset);
     }
 
     @Override
