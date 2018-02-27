@@ -138,11 +138,76 @@
 
 
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/fragment_stats_chart"
-                android:layout_height="300dp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                />
+                android:layout_height="wrap_content">
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/fragment_stats_chart"
+                    android:layout_height="300dp"
+                    android:layout_width="match_parent"
+                    />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedbackground"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:layout_gravity="center_horizontal">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_all_inclusive_black_24dp"
+                        android:drawableTint="#FFF"
+                        android:background="@android:color/transparent"
+                        android:textColor="#FFF"
+                        android:text="All"
+                        android:paddingRight="12dp"/>
+
+                    <View android:layout_height="match_parent"
+                        android:layout_gravity="center"
+
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="1dp"
+                        android:layout_column="1"
+                        android:background="#FFF" />
+
+                    <Button
+                        android:textColor="#FFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_timelapse_black_24dp"
+                        android:drawableTint="#FFF"
+                        android:background="@android:color/transparent"
+                        android:text="7 days"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"/>
+
+                    <View android:layout_height="match_parent"
+                        android:layout_gravity="center"
+
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="1dp"
+                        android:layout_column="1"
+                        android:background="#FFF" />
+
+                    <Button
+                        android:textColor="#FFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_whatshot_black_24dp"
+                        android:drawableTint="#FFF"
+                        android:background="@android:color/transparent"
+                        android:text="24h"
+                        android:paddingLeft="12dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:descendantFocusability="blocksDescendants"
