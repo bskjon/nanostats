@@ -10,9 +10,38 @@
     android:descendantFocusability="blocksDescendants"
     android:focusableInTouchMode="true">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_donate_recyclerView"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donate with paypal"/>
+            <ImageButton
+                android:tint="@color/colorSecondary"
+                android:backgroundTint="@color/colorAccent"
+                android:id="@+id/activity_donate_paypal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:minWidth="150dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_right_black_24dp"
+                />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_donate_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

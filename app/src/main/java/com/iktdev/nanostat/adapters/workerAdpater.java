@@ -1,6 +1,7 @@
 package com.iktdev.nanostat.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,6 +79,9 @@ public class workerAdpater extends RecyclerView.Adapter<workerAdpater.ViewHolder
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if (items != null)
+            return items.size();
+        else
+            return -1;
     }
 }

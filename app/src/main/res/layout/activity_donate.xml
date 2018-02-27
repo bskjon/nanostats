@@ -23,10 +23,14 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <RelativeLayout
+            <LinearLayout
+                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="50dp">
                 <TextView
                     android:layout_alignParentBottom="true"
                     android:text="@string/activity_donate_Title"
@@ -34,10 +38,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:layout_marginBottom="40dp"
                     android:ellipsize="none"
                     />
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:textAlignment="center"
+                    android:text="@string/activity_donate_SubTitle"
+                    />
+            </LinearLayout>
 
             <!--<android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

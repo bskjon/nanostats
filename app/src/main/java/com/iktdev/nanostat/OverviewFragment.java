@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class OverviewFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_overview, container, false);
     }
 
+    public SwipeRefreshLayout srl;
     RecyclerView rv;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -43,6 +45,17 @@ public class OverviewFragment extends Fragment {
         rv.setLayoutManager(linearLayoutManager);
 
         rv.setHasFixedSize(false);
+
+        srl = (SwipeRefreshLayout)getView().findViewById(R.id.fragment_overview_refreshLayout);
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                rv.setAdapter(null);
+                setValue(true);
+            }
+        });
+
+
     }
 
     @Override
@@ -52,12 +65,12 @@ public class OverviewFragment extends Fragment {
         overviewAdapter adapter = (overviewAdapter) rv.getAdapter();
         if (adapter == null)
         {
-            setValue();
+            setValue(false);
         }
         else
         {
             rv.setAdapter(null);
-            setValue();
+            setValue(false);
         }
 
 
@@ -65,7 +78,7 @@ public class OverviewFragment extends Fragment {
 
     }
 
-    public void setValue()
+    public void setValue(boolean IsPulledToRefresh)
     {
         ArrayList<overview> items = new ArrayList<>();
         int[] wallets = {
@@ -92,7 +105,7 @@ public class OverviewFragment extends Fragment {
         overviewAdapter adapter = new overviewAdapter(getActivity(), items);
         rv.setAdapter(adapter);
         nanopoolHandler api = new nanopoolHandler();
-        api.applyOverview(getActivity(), items, rv);
+        api.applyOverview(getActivity(), items, rv, srl);
 
 
         /*overviewAdapter adapter = new overviewAdapter(getActivity(), items);

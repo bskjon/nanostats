@@ -1,5 +1,7 @@
 package com.iktdev.nanostat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.iktdev.nanostat.adapters.donateAdapter;
 import com.iktdev.nanostat.classes.account;
@@ -39,19 +42,27 @@ public class DonateActivity extends AppCompatActivity {
         rv.setLayoutManager(linearLayoutManager);
         initAdapter(rv);
 
+        ((ImageButton)findViewById(R.id.activity_donate_paypal)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/iktdev"));
+                startActivity(browserIntent);
+            }
+        });
+
     }
 
     public void initAdapter(RecyclerView rv)
     {
         ArrayList<account> items = new ArrayList<>();
         int[] donateAddresses = {
-                R.string.donate_crypto_BCH,
                 R.string.donate_crypto_BTC,
-                R.string.donate_crypto_ETC,
+                R.string.donate_crypto_BCH,
                 R.string.donate_crypto_ETH,
                 R.string.donate_crypto_LTC,
+                R.string.donate_crypto_ZEC,
                 R.string.donate_crypto_XMR,
-                R.string.donate_crypto_ZEC
+                R.string.donate_crypto_ETC
         };
 
         for (int i = 0; i < donateAddresses.length; i++)

@@ -11,6 +11,7 @@
     <string name="payoutProgressTitle">Remaining progress until payout</string>
     <string name="payoutProgressText">Minimum payout is set under your account on NanoPool</string>
 
+    <string name="VersionNumber_PreText">Current app version: </string>
 
     <!--Wallet shared preferences-->
     <string name="zec_address"></string>
@@ -54,7 +55,8 @@
     <string name="donate_crypto_XMR">465vz7YzczZJ6vmYjbiM7cJoJeiNJ6kd99YdZ4LkKfJr2Leof2FLP3s8WiivUB5y8xWXqxA8zMxBc3iKdZqwt9X9V2CgWcx</string>
     <string name="donate_crypto_LTC">LVZLExBkiA3s4jYrScsTQHyJgvnNcPQN3L</string>
     <string name="title_activity_donate">Donation</string>
-    <string name="activity_donate_Title">Thank you, your support means a lot</string>
+    <string name="activity_donate_Title">Thank you!</string>
+    <string name="activity_donate_SubTitle">Your donation keeps this app alive!</string>
 
 
 </resources>

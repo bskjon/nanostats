@@ -5,9 +5,12 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -180,13 +183,21 @@ public class nanopoolHandler
                             balance.setText(gi.balance);
                             unconfirmed_balance.setText("+ " + gi.unconfirmed_balance);
                             hashrate.setText(String.valueOf(gi.hashrate));
-
                             recyclerView.setHasFixedSize(true);
-                            com.iktdev.nanostat.adapters.workerAdpater adapter = new workerAdpater(context, gi.workersList);
-                            recyclerView.setAdapter(adapter);
+                            ArrayList<Workers> WorkerList = gi.workersList;
+                            if (WorkerList != null && WorkerList.size() > 0)
+                            {
+                                workerAdpater adapter = new workerAdpater(context, gi.workersList);
+                                recyclerView.setAdapter(adapter);
+                            }
+                            else
+                            {
+                                Toast.makeText(context, "Failed to retrieve chart data..", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else
                         {
+
                             balance.setText("Unexpected error, value -2");
                             unconfirmed_balance.setText("Unexpected error, value -2");
                             hashrate.setText("Unexpected error, value -2");
@@ -316,7 +327,7 @@ public class nanopoolHandler
 
 
     public overviewAdapter _overviewAdapter;
-    public void applyOverview(final Activity context, final ArrayList<overview> ovs, final RecyclerView rv)
+    public void applyOverview(final Activity context, final ArrayList<overview> ovs, final RecyclerView rv, final SwipeRefreshLayout srl)
     {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -360,11 +371,13 @@ public class nanopoolHandler
                                             _overviewAdapter.updateItem(nov, finalI);
                                         }
                                     });
-
-
-
                                 }
                             });
+
+                        }
+
+                        if (srl != null){
+                            srl.setRefreshing(false);
 
                         }
 

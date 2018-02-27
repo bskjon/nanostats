@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.iktdev.nanostat.core.SharedPreferencesHandler;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         CrashManager.register(this, getMetaString("net.hockeyapp.android.appIdentifier"), new CrashManagerHandler());
         setContentView(R.layout.activity_main);
@@ -55,6 +59,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        try
+        {
+            PackageInfo packageInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = getString(R.string.VersionNumber_PreText) + " " + packageInfo.versionName;
+
+
+            TextView versionText = (TextView)navigationView.getHeaderView(0).findViewById(R.id.textViewAppVersion);
+            if (versionText != null)
+                versionText.setText(version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
         if (savedInstanceState == null)
         {
             navigationView.getMenu().getItem(0).setChecked(true);
@@ -76,7 +94,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
