@@ -256,7 +256,7 @@ public class AccountActivity extends AppCompatActivity {
         dialog.setTitle(R.string.AccountActivity_AddWalletTitle);
         dialog.setMessage(getString(R.string.AccountActivity_AddWalletMessage_P1) + " " + WalletTypeText + " " + getString(R.string.AccountActivity_AddWalletMessage_P2));
         dialog.setView(input);
-        dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(getString(R.string.dialog_positive_add), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, int i)
             {
@@ -316,7 +316,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setNeutralButton("Scan code", new DialogInterface.OnClickListener() {
+        dialog.setNeutralButton(getString(R.string.dialog_neutral_scannQr), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
@@ -334,7 +334,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(getString(R.string.dialog_negative_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 CurrentWalletId = -1;

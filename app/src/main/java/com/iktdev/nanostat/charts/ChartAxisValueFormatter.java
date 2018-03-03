@@ -16,16 +16,18 @@ public class ChartAxisValueFormatter implements IAxisValueFormatter {
     private DateFormat mDataFormat;
     private Date mDate;
 
-    public ChartAxisValueFormatter(long referenceTimestamp) {
+    /*public ChartAxisValueFormatter(long referenceTimestamp) {
         this.referenceTimestamp = referenceTimestamp;
         this.mDataFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
         this.mDate = new Date();
-    }
+    }*/
 
     /**
      * Called when a value from an axis is to be formatted
      * before being drawn. For performance reasons, avoid excessive calculations
      * and memory allocations inside this method.
+     *
+     * https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/custom/DayAxisValueFormatter.java
      */
 
     @Override

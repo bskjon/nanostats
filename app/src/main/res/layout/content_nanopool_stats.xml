@@ -220,7 +220,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                    android:text="Workers"
+                    android:text="@string/fragment_stats_WorkersTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"/>

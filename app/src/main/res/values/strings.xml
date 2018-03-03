@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="fragment_stats_uncvonfirmed_balance">unconfirmed</string>
 
     <string name="payoutLimitText">Payout limit is</string>
     <string name="payoutProgressTitle">Remaining progress until payout</string>
@@ -21,6 +22,9 @@
     <string name="xmr_address"></string>
     <string name="pasc_address"></string>
     <string name="etn_address"></string>
+
+    <string name="menu_entry_overview">Overview</string>
+    <string name="menu_entry_donate">Donate</string>
 
     <string name="title_activity_account">My Accounts</string>
     <string name="menuAction_Edit">Edit</string>
@@ -45,6 +49,15 @@
     <string name="cryptoName_XMR">Monero</string>
     <string name="cryptoName_PASC">Pascal</string>
     <string name="cryptoName_ETN">Electroneum</string>
+
+    <string name="adapter_overview_sharesText">SHARES PAST DAY</string>
+    <string name="fragment_stats_WorkersTitle">Workers</string>
+    <string name="activity_donatePaypalText">Donate with paypal</string>
+
+
+    <string name="dialog_positive_add">Add</string>
+    <string name="dialog_negative_cancel">Cancel</string>
+    <string name="dialog_neutral_scannQr">Read Code</string>
 
 
     <string name="donate_crypto_BTC">1Muxuue7o1hztxpBMZZJTyXV22KrCy5QFs</string>

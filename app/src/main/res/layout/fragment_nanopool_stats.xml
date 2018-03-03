@@ -43,14 +43,15 @@
                         <TextView
                             android:id="@+id/fragment_stats_balance"
                             android:text="0.00000"
-                            android:textSize="28dp"
+                            android:textSize="48dp"
+                            android:layout_marginLeft="48dp"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <ImageView
                             android:id="@+id/crypto_ic"
                             android:layout_marginLeft="5dp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="48dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/ic_monero"
                             />
@@ -73,10 +74,11 @@
                             android:layout_height="wrap_content"
                             android:text="###"/>
                         <TextView
+
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="unconfirmed"/>
+                            android:text="@string/fragment_stats_uncvonfirmed_balance"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
