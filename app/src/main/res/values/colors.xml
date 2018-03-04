@@ -18,7 +18,8 @@
     <color name="colorTransBg">#26000000</color>
 
     <color name="ZECcolor">#FF3a5e84</color>
-    <color name="ETHcolor">#FFe95420</color>
+    <!--<color name="ETHcolor">#FFe95420</color>-->
+    <color name="ETHcolor">#FF6f7cba</color>
     <color name="ETCcolor">#FF3fb009</color>
     <color name="SIAcolor">#FF2fa4e7</color>
     <color name="XMRcolor">#FF4d4d4d</color>

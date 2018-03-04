@@ -34,7 +34,7 @@ public class ChartValueHandler
         for(ChartData item : items)
         {
 
-            Date itemDate = new Date(item.date);
+            Date itemDate = new Date(item.date*1000L);
             if (itemDate.after(cal.getTime()))
             {
                 Log.d("CHART DEBUG", df.format(itemDate) + ":: " +df.format(date) + " (PastDay)");

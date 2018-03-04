@@ -23,11 +23,11 @@
             android:text="@string/large_text" />-->
         <LinearLayout
             android:orientation="vertical"
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_margin="16dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -58,6 +58,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -148,6 +149,7 @@
                     android:layout_width="match_parent"
                     />
                 <LinearLayout
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -210,6 +212,7 @@
 
 
             <LinearLayout
+                android:layout_margin="16dp"
                 android:descendantFocusability="blocksDescendants"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical"

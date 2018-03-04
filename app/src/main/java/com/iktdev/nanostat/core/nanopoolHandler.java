@@ -38,7 +38,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Brage on 18.02.2018.
@@ -216,14 +218,16 @@ public class nanopoolHandler
             @Override
             public void run() {
                 ArrayList<ChartData> chartData = getChartData(url);
-                List<Entry> entries = new ArrayList<>();
+                final Map<Integer, Long> values = new HashMap<>();
+
+                final List<Entry> entries = new ArrayList<>();
                 if (chartData != null && chartData.size() > 0)
                 {
-                    final long referenceTimeStamp = (chartData.get(0).date);
                     for (ChartData data : chartData)
                     {
                         //entries.add(new Entry((long)data.date, data.shares));
                         entries.add(new Entry(chartData.indexOf(data), data.shares));
+                        values.put(chartData.indexOf(data), data.date);
                     }
                     LineDataSet dataset = new LineDataSet(entries, "Shares");
                     dataset.setDrawValues(false);
@@ -254,9 +258,13 @@ public class nanopoolHandler
                             chart.getXAxis().setDrawGridLines(false);
                             chart.getLegend().setEnabled(false);
                             chart.getData().setHighlightEnabled(false);
-                                        /*ChartAxisValueFormatter cavf = new ChartAxisValueFormatter(referenceTimeStamp);
+                            chart.setScaleYEnabled(false);
+
+
+                                        ChartAxisValueFormatter cavf = new ChartAxisValueFormatter(chart, context, values);
                                         XAxis xAxis = chart.getXAxis();
-                                        xAxis.setValueFormatter(cavf);*/
+                                        xAxis.setGranularity(1f);
+                                        xAxis.setValueFormatter(cavf);
 
 
                             chart.invalidate();

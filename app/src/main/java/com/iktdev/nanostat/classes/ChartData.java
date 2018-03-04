@@ -12,7 +12,7 @@ public class ChartData
 
     public ChartData(long date, int shares, double hashrate)
     {
-        this.date = date*1000;
+        this.date = date; //*1000;
         this.shares = shares;
         this.hashrate = hashrate;
     }

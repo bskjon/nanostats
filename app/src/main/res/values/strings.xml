@@ -50,6 +50,9 @@
     <string name="cryptoName_PASC">Pascal</string>
     <string name="cryptoName_ETN">Electroneum</string>
 
+
+    <string name="adapter_workers_LastSeen">Last seen</string>
+
     <string name="adapter_overview_sharesText">SHARES PAST DAY</string>
     <string name="fragment_stats_WorkersTitle">Workers</string>
     <string name="activity_donatePaypalText">Donate with paypal</string>
@@ -70,6 +73,33 @@
     <string name="title_activity_donate">Donation</string>
     <string name="activity_donate_Title">Thank you!</string>
     <string name="activity_donate_SubTitle">Your donation keeps this app alive!</string>
+
+
+    <string name="month1">January</string>
+    <string name="month2">February</string>
+    <string name="month3">March</string>
+    <string name="month4">April</string>
+    <string name="month5">May</string>
+    <string name="month6">June</string>
+    <string name="month7">July</string>
+    <string name="month8">August</string>
+    <string name="month9">September</string>
+    <string name="month10">October</string>
+    <string name="month11">November</string>
+    <string name="month12">December</string>
+
+    <string name="month1SHORT">Jan</string>
+    <string name="month2SHORT">Feb</string>
+    <string name="month3SHORT">Mar</string>
+    <string name="month4SHORT">Apr</string>
+    <string name="month5SHORT">May</string>
+    <string name="month6SHORT">Jun</string>
+    <string name="month7SHORT">Jul</string>
+    <string name="month8SHORT">Aug</string>
+    <string name="month9SHORT">Sep</string>
+    <string name="month10SHORT">Oct</string>
+    <string name="month11SHORT">Nov</string>
+    <string name="month12SHORT">Dec</string>
 
 
 </resources>
