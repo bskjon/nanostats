@@ -1,6 +1,7 @@
 package com.iktdev.nanostat.adapters;
 
 import android.app.Activity;
+import android.support.design.widget.NavigationView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -15,10 +17,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.iktdev.nanostat.CustomViews.CircleProgressBar;
+import com.iktdev.nanostat.MainActivity;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.classes.ChartData;
 import com.iktdev.nanostat.classes.overview;
 import com.iktdev.nanostat.core.helper;
+import com.iktdev.nanostat.core.nanopoolHandler;
 
 import org.w3c.dom.Text;
 
@@ -83,9 +87,9 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
     {
         helper _helper = new helper();
         overview ov = items.get(position);
+        final int WalletId = ov.WalletId;
         holder.walletIcon.setImageResource(ov.WalletImageId);
         holder.balance_valuta.setText(ov.WalletShortText);
-
         holder.balance.setText(decimalFormat.format(ov.Balance));
 
         if (ov.Balance > 0.0 && ov.PayoutLimit > 0.0)
@@ -95,10 +99,68 @@ public class overviewAdapter extends RecyclerView.Adapter<overviewAdapter.ViewHo
             holder.cpb.setProgressWithAnimation((float)progress);
         }
 
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (context instanceof MainActivity)
+                {
+                    int entry = -1;
+                    switch (WalletId)
+                    {
+                        case R.string.zec_address:
+                            entry = 4;
+                            break;
+
+                        case R.string.eth_address:
+                            entry = 1;
+                            break;
+
+                        case R.string.etc_address:
+                            entry = 2;
+                            break;
+
+                        case R.string.sia_address:
+                            entry = 3;
+                            break;
+
+                        case R.string.xmr_address:
+                            entry = 5;
+                            break;
+
+                        case R.string.pasc_address:
+                            entry = 6;
+                            break;
+
+                        case R.string.etn_address:
+                            entry = 7;
+                            break;
+                    }
+
+                    NavigationView nv = ((MainActivity)context).findViewById(R.id.nav_view);
+                    nv.getMenu().getItem(entry).setChecked(true);
+                    ((MainActivity)context).onNavigationItemSelected(nv.getMenu().getItem(entry));
+
+                }
+                else
+                {
+                    Toast.makeText(context, "uhmm this was not suppose to happen..", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
+
+
+
+
+
+
+
         List<Entry> entryList = new ArrayList<>();
         if (ov.chartData != null && ov.chartData .size() > 0)
         {
-            final long referenceTimeStamp = (ov.chartData.get(0).date);
             for (ChartData data : ov.chartData)
             {
                 //entries.add(new Entry((long)data.date, data.shares));
