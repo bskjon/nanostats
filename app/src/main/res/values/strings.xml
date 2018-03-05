@@ -38,6 +38,8 @@
 
     <string name="AccountActivity_CheckingAccount_ProgressDialogTitle">Validating account</string>
     <string name="AccountActivity_CheckingAccount_ProgressDialogMessage">Checking if your account exist in Nanopool</string>
+    <string name="AccountActivity_AccountFound">Your account has been verified and added!</string>
+    <string name="AccountActivity_AccountNotFound">Couldn\'t find your account! Please verify that your address is correct and try again</string>
 
 
     <string name="title_activity_nanopool_stats">NanopoolStatsActivity</string>
@@ -101,5 +103,8 @@
     <string name="month11SHORT">Nov</string>
     <string name="month12SHORT">Dec</string>
 
+    <string name="donation_about_Headline">About donation</string>
+    <string name="donation_about_text">NanoStats is free does not include ads or any required payments to work.
+        Donations is optional. If you choose to donate or not, it will not change how app behave or work.</string>
 
 </resources>

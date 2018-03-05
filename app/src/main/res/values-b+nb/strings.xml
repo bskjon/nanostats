@@ -38,6 +38,8 @@
 
     <string name="AccountActivity_CheckingAccount_ProgressDialogTitle">Validerer konto</string>
     <string name="AccountActivity_CheckingAccount_ProgressDialogMessage">Sjekker om kontoen din eksisterer hos Nanopool</string>
+    <string name="AccountActivity_AccountFound">Din konto har blitt kontrollert og lagt til</string>
+    <string name="AccountActivity_AccountNotFound">Kunne ikke finne din konto! Vennligst kontroller at adressen er riktig og forsøk på nytt</string>
 
 
     <string name="title_activity_nanopool_stats">NanopoolStatsActivity</string>
@@ -102,5 +104,8 @@
     <string name="month11SHORT">Nov</string>
     <string name="month12SHORT">Des</string>
 
+    <string name="donation_about_Headline">Om donasjon</string>
+    <string name="donation_about_text">NanoStats er en gratis app og inneholder ingen reklame, eller krever betailing for å virke.
+         Det er helt valgfritt å donere. Hvis du velger å donere eller ikke vil dette ikke ha noe påvirkining på hvordan appen virker eller oppfører seg.</string>
 
 </resources>

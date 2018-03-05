@@ -285,10 +285,10 @@ public class AccountActivity extends AppCompatActivity {
                                     {
                                         String data = nanoH.getJSONField(apiResponse, "data");
                                         pd.dismiss();
-                                        Toast.makeText(AccountActivity.this, "Response from nanopool " + data, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(AccountActivity.this, getString(R.string.AccountActivity_AccountFound), Toast.LENGTH_LONG).show();
                                         SharedPreferencesHandler handler = new SharedPreferencesHandler();
                                         handler.setString(AccountActivity.this, addressType, textIn);
-                                        Toast.makeText(AccountActivity.this, handler.getString(AccountActivity.this, addressType), Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(AccountActivity.this, handler.getString(AccountActivity.this, addressType), Toast.LENGTH_LONG).show();
                                         dialogInterface.dismiss();
                                         if (Address_Passed)
                                             AccountActivity.super.onBackPressed();
@@ -301,7 +301,7 @@ public class AccountActivity extends AppCompatActivity {
                                     {
                                         pd.dismiss();
                                         String data = nanoH.getJSONField(apiResponse, "error");
-                                        Toast.makeText(AccountActivity.this, "Response from nanopool " + data, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(AccountActivity.this, getString(R.string.AccountActivity_AccountNotFound), Toast.LENGTH_LONG).show();
                                         dialogInterface.dismiss();
                                         showInputDialog(addressType, textIn);
                                     }
