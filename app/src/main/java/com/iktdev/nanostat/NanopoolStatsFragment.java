@@ -239,11 +239,13 @@ public class NanopoolStatsFragment extends Fragment {
             public void run() {
                 while (ccv.getBalance_changed() == null && ccv.getPayoutLimit_changed() == null)
                 {
-                    Log.e("WAITING", "Waiting for Balance and Payoutlimit change!");
+                    //Log.e("WAITING", "Waiting for Balance and Payoutlimit change!");
                     SystemClock.sleep(500);
                 }
-
                 final double progress = ((ccv.getBalance() / ccv.getPayoutLimit())*100);
+
+                apiHandler.getPrices(prefix);
+
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -252,6 +254,10 @@ public class NanopoolStatsFragment extends Fragment {
                         {
                             payoutProgress.setProgressWithAnimation((float)progress);
                             payoutProgressText.setText(String.valueOf(Math.round(progress))+ "%" );
+
+
+
+
                         }
 
                         if (isPulledToRefresh)

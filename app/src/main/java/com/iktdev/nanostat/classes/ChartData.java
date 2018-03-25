@@ -1,5 +1,9 @@
 package com.iktdev.nanostat.classes;
 
+import android.support.annotation.NonNull;
+
+import java.util.Comparator;
+
 /**
  * Created by Brage on 23.02.2018.
  */

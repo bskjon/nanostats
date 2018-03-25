@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.fragmentContainer, f);
             ft.commit();
         }
+        //getFragmentManager().popBackStack();
         visibleFragment = f;
     }
 

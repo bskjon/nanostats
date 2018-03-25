@@ -607,6 +607,7 @@ public class AccountActivity extends AppCompatActivity {
         }else{
 
             super.onBackPressed();
+            finish();
 
         }
 

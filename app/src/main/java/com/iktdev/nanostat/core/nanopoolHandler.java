@@ -26,6 +26,7 @@ import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
 import com.iktdev.nanostat.charts.ChartValueHandler;
 import com.iktdev.nanostat.classes.ChartData;
 import com.iktdev.nanostat.classes.overview;
+import com.iktdev.nanostat.classes.Prices;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,11 +37,14 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Brage on 18.02.2018.
@@ -65,6 +69,7 @@ public class nanopoolHandler
     public String general(String prefix, String Address) { return prefix + "user/" + Address; }
     public String hashratechart(String prefix, String Address) {return  prefix + "hashratechart/" + Address; }
     public String payoutlimit(String prefix, String Address) { return  prefix + "usersettings/" + Address; }
+    public String prices(String prefix) { return prefix + "prices"; }
 
     public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
 
@@ -105,8 +110,6 @@ public class nanopoolHandler
         }
         return null;
     }
-
-
     public ArrayList<ChartData> getChartData(final String url)
     {
 
@@ -169,6 +172,34 @@ public class nanopoolHandler
         }
         return -1;
     }
+    public Prices getPrices(String url)
+    {
+        final HttpHandler httpHandler = new HttpHandler();
+        boolean urlAllowed = httpHandler.setUrl(url);
+        if (urlAllowed)
+        {
+            String res = httpHandler.getApiResponse(httpHandler.getUrl());
+            try
+            {
+                JSONObject data = new JSONObject(res).getJSONObject("data");
+                Prices prices = new Prices(
+                        data.getDouble("price_usd"),
+                        data.getDouble("price_eur"),
+                        data.getDouble("price_rur"),
+                        data.getDouble("price_cny"),
+                        data.getDouble("price_btc")
+                );
+                return prices;
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+
 
     public void applyGeneralInfo(final Activity context, final String url, final currentCryptoValues cryptoValues, final TextView balance, final TextView unconfirmed_balance, final TextView hashrate, final RecyclerView recyclerView)
     {
@@ -218,17 +249,27 @@ public class nanopoolHandler
             @Override
             public void run() {
                 ArrayList<ChartData> chartData = getChartData(url);
-                final Map<Integer, Long> values = new HashMap<>();
+                final Map<Long, ChartData> values = new TreeMap<>();
+                for (ChartData cd : chartData)
+                {
+                    values.put(cd.date, cd);
+                }
 
                 final List<Entry> entries = new ArrayList<>();
-                if (chartData != null && chartData.size() > 0)
+
+                if (values != null && values.size() > 0)
                 {
-                    for (ChartData data : chartData)
+                    int i = 0;
+                    for (ChartData data : values.values())
                     {
                         //entries.add(new Entry((long)data.date, data.shares));
-                        entries.add(new Entry(chartData.indexOf(data), data.shares));
-                        values.put(chartData.indexOf(data), data.date);
+                        //entries.add(new Entry(chartData.indexOf(data), data.shares));
+                        entries.add(new Entry(i, data.shares));
+                        //values.put(chartData.indexOf(data), data.date);
+                        i+=1;
                     }
+
+
                     LineDataSet dataset = new LineDataSet(entries, "Shares");
                     dataset.setDrawValues(false);
                     dataset.setDrawCircleHole(false);
@@ -278,7 +319,6 @@ public class nanopoolHandler
         });
 
     }
-
 
     public void applyPayoutLimit(final Activity context , final String url, final currentCryptoValues cryptoValues, final TextView payoutText)
     {

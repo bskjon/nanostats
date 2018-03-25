@@ -8,12 +8,29 @@
         android:id="@+id/fragment_overview_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fragment_overview_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_overview_noAccountsAdded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:text="@string/noAccountAdded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_margin="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/howToAddAnAccount"/>
+    </LinearLayout>
 
 
 </FrameLayout>

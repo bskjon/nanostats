@@ -101,6 +101,10 @@ public class OverviewFragment extends Fragment {
             }
         }
 
+        if (items.size() > 0)
+        {
+            getView().findViewById(R.id.fragment_overview_noAccountsAdded).setVisibility(View.GONE);
+        }
 
         overviewAdapter adapter = new overviewAdapter(getActivity(), items);
         rv.setAdapter(adapter);
@@ -178,6 +182,7 @@ public class OverviewFragment extends Fragment {
         }
         return null;
     }
+
 
 
 }

@@ -31,6 +31,8 @@
     <string name="menuAction_Copy">Kopier Adressen</string>
     <string name="menuAction_Delete">Slett</string>
 
+    <string name="noAccountAdded">Åå.. Det ser litt tomt ut her...</string>
+    <string name="howToAddAnAccount">For å legge til en konto, trykk på \'Mine kontoer\' i app menyen, trykk så på \'+\' knappen og velg adresse typen</string>
 
     <string name="AccountActivity_AddWalletTitle">Skriv eller lim inn adressen</string>
     <string name="AccountActivity_AddWalletMessage_P1">Kun en</string>
