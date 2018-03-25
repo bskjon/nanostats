@@ -6,6 +6,8 @@
     <color name="colorAccent">#008BFF</color>
     <color name="colorSecondary">#EEEEEE</color>
 
+    <color name="backgroundColor">#FFF</color>
+
 
     <!--Potential
     <color name="colorPrimary">#393E46</color>
