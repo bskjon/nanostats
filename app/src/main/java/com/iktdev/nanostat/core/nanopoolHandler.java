@@ -386,12 +386,16 @@ public class nanopoolHandler
             }
         });
     }
-    public void applyPayments(final Activity context, final  String url, final ListView lsv)
+    public void applyPayments(final Activity context, final  String url, final ListView lsv, final String CryptoShort)
     {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 final ArrayList<Payments> data = getPayments(url);
+                for(Payments p : data)
+                {
+                    p.CryptoShort = CryptoShort;
+                }
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

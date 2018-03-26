@@ -13,7 +13,7 @@
             android:background="@color/BCH_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.8"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -24,14 +24,6 @@
                 android:textSize="18sp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginLeft="8dp" />
-            <TextView
-                android:id="@+id/adapter_paymentsCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:text=""
-                android:textSize="18sp"
-                android:layout_marginEnd="4dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/receivedAmount"
@@ -47,6 +39,7 @@
                 android:textSize="18sp"
                 android:text="0.0000000000000"/>
             <TextView
+                android:id="@+id/adapter_paymentsCurrencyShort"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_width="wrap_content"

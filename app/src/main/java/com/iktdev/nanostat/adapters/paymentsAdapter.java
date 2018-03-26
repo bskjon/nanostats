@@ -56,8 +56,9 @@ public class paymentsAdapter extends BaseAdapter
         calendar.setTime(new Date(p.date*1000));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 
-        ((TextView)view.findViewById(R.id.adapter_paymentsDate)).setText(sdf.format(calendar));
+        ((TextView)view.findViewById(R.id.adapter_paymentsDate)).setText(sdf.format(calendar.getTime()));
         ((TextView)view.findViewById(R.id.adapter_paymentsBalance)).setText(String.valueOf(p.amount));
+        ((TextView)view.findViewById(R.id.adapter_paymentsCurrencyShort)).setText(p.CryptoShort);
 
         return view;
     }

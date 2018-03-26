@@ -39,6 +39,7 @@ public class NanopoolStatsFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private int crypto  = -1;
     private String wallet = "";
+    private String cryptoShort = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class NanopoolStatsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), PaymentsActivity.class);
                 intent.putExtra("address", wallet);
                 intent.putExtra("cryptoId", crypto);
+                intent.putExtra("prefix", prefix);
+                intent.putExtra("cryptoShort", cryptoShort);
                 startActivity(intent);
             }
         });
@@ -224,6 +227,7 @@ public class NanopoolStatsFragment extends Fragment {
 
     private void SetDefaults(int Resid, String currcencyShort, String hashrateFormat, int ColorId)
     {
+        this.cryptoShort = currcencyShort;
         ((ImageView)getView().findViewById(R.id.crypto_ic)).setImageResource(Resid);
         ((TextView)getView().findViewById(R.id.fragment_stats_cryptoName)).setText(currcencyShort);
         ((TextView)getView().findViewById(R.id.fragment_stats_hashrate_format)).setText(hashrateFormat);

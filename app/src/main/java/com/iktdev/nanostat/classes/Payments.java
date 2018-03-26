@@ -7,6 +7,7 @@ package com.iktdev.nanostat.classes;
 public class Payments
 {
     public int cryptoCurrency;
+    public String CryptoShort;
     public long date;
     public String txHash;
     public double amount;
