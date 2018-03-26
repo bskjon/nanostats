@@ -21,10 +21,12 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.adapters.overviewAdapter;
+import com.iktdev.nanostat.adapters.paymentsAdapter;
 import com.iktdev.nanostat.adapters.workerAdpater;
 import com.iktdev.nanostat.charts.ChartAxisValueFormatter;
 import com.iktdev.nanostat.charts.ChartValueHandler;
 import com.iktdev.nanostat.classes.ChartData;
+import com.iktdev.nanostat.classes.Payments;
 import com.iktdev.nanostat.classes.overview;
 import com.iktdev.nanostat.classes.Prices;
 
@@ -69,6 +71,7 @@ public class nanopoolHandler
     public String general(String prefix, String Address) { return prefix + "user/" + Address; }
     public String hashratechart(String prefix, String Address) {return  prefix + "hashratechart/" + Address; }
     public String payoutlimit(String prefix, String Address) { return  prefix + "usersettings/" + Address; }
+    public String payments(String prefix, String Address) { return prefix + "payments/" + Address; }
     public String prices(String prefix) { return prefix + "prices"; }
 
     public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
@@ -171,6 +174,44 @@ public class nanopoolHandler
             }
         }
         return -1;
+    }
+    public ArrayList<Payments> getPayments(String url)
+    {
+        final HttpHandler httpHandler = new HttpHandler();
+        boolean urlAllowed = httpHandler.setUrl(url);
+        if (urlAllowed)
+        {
+            ArrayList<Payments> payments = new ArrayList<>();
+            String res = httpHandler.getApiResponse(httpHandler.getUrl());
+            try
+            {
+                JSONObject main = new JSONObject(res);
+                Boolean status = main.getBoolean("status");
+                if (status)
+                {
+                    JSONArray ja = main.getJSONArray("data");
+                    for (int i = 0; i < ja.length(); i++)
+                    {
+                        JSONObject jo = ja.getJSONObject(i);
+                        Payments p = new Payments(
+                                jo.getLong("date"),
+                                jo.getString("txHash"),
+                                jo.getDouble("amount"),
+                                jo.getBoolean("confirmed")
+                        );
+                        payments.add(p);
+
+                    }
+                }
+                return payments;
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
     public Prices getPrices(String url)
     {
@@ -340,6 +381,25 @@ public class nanopoolHandler
                             payoutText.setText("Unexpected error, value -1");
 
 
+                    }
+                });
+            }
+        });
+    }
+    public void applyPayments(final Activity context, final  String url, final ListView lsv)
+    {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                final ArrayList<Payments> data = getPayments(url);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       if (data != null && data.size() > 0)
+                       {
+                           paymentsAdapter pa = new paymentsAdapter(context, data);
+                           lsv.setAdapter(pa);
+                       }
                     }
                 });
             }

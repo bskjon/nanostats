@@ -3,6 +3,7 @@ package com.iktdev.nanostat;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -60,16 +61,20 @@ public class NanopoolStatsFragment extends Fragment {
         Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         //getView().setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace wit your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace wit your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent intent = new Intent(getActivity(), PaymentsActivity.class);
+                intent.putExtra("address", wallet);
+                intent.putExtra("cryptoId", crypto);
+                startActivity(intent);
             }
         });
 
-        */
+
 
         refreshLayout = (SwipeRefreshLayout)getView().findViewById(R.id.fragment_stats_pullToRefresh);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

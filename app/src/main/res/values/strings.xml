@@ -30,7 +30,7 @@
     <string name="menuAction_Edit">Edit</string>
     <string name="menuAction_Copy">Copy Address</string>
     <string name="menuAction_Delete">Delete</string>
-    
+
     <string name="noAccountAdded">Oh.. You haven\'t added an account yet...</string>
     <string name="howToAddAnAccount">To add an account, go to \'My Accounts\' in the app drawer, and then press the \'+\' button and select the address type</string>
 
@@ -54,6 +54,11 @@
     <string name="cryptoName_XMR">Monero</string>
     <string name="cryptoName_PASC">Pascal</string>
     <string name="cryptoName_ETN">Electroneum</string>
+
+    <string name="adapter_payments_ReceivedText">Received</string>
+    <string name="adapter_payments_ReceivedOn">On</string>
+
+
 
 
     <string name="adapter_workers_LastSeen">Last seen</string>
