@@ -7,11 +7,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.iktdev.nanostat.R;
+import com.iktdev.nanostat.adapters.paymentsAdapter;
+import com.iktdev.nanostat.classes.Payments;
 import com.iktdev.nanostat.core.nanopoolHandler;
+
+import java.util.ArrayList;
 
 public class PaymentsActivity extends AppCompatActivity {
 
@@ -20,11 +25,14 @@ public class PaymentsActivity extends AppCompatActivity {
     private String CryptoShort = null;
     private int Crypto = -1;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payments);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -54,6 +62,41 @@ public class PaymentsActivity extends AppCompatActivity {
         rv.setLayoutManager(linearLayoutManager);
 
         rv.setHasFixedSize(false);*/
-
     }
+
+    public void onPaymentDataRecieved(double finalPayedInTotal)
+    {
+        if (toolbar == null)
+            return;
+
+        toolbar.setTitle(String.valueOf(nanopoolHandler.decimalFormat.format(finalPayedInTotal))+ " " +CryptoShort);
+/*
+        double PayedInTotal = 0.0;
+        ListView lv = (ListView)findViewById(R.id.paymentsListView);
+        paymentsAdapter adapter = (paymentsAdapter) lv.getAdapter();
+        if (adapter != null)
+        {
+            ArrayList<Payments> allPayments = adapter.getArray();
+            for(Payments p : allPayments)
+            {
+                PayedInTotal += p.amount;
+            }
+
+            final double finalPayedInTotal = PayedInTotal;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    toolbar.setTitle(String.valueOf(nanopoolHandler.decimalFormat.format(finalPayedInTotal))+ " " +CryptoShort);
+                    getSupportActionBar().setSubtitle("Test subtitle");
+                    toolbar.setSubtitle("Total paid for this account");
+
+                }
+            });
+
+            toolbar.invalidate();
+            Log.e("Toolbar Title", toolbar.getTitle().toString());
+
+        }*/
+    }
+
 }

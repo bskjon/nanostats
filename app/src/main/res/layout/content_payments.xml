@@ -10,6 +10,7 @@
     tools:showIn="@layout/activity_payments">
 
     <ListView
+        android:nestedScrollingEnabled="true"
         android:id="@+id/paymentsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

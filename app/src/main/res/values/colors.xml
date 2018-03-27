@@ -8,6 +8,9 @@
 
     <color name="backgroundColor">#FFF</color>
 
+    <color name="positive">#006400</color>
+    <color name="negative">#c30000</color>
+
 
     <!--Potential
     <color name="colorPrimary">#393E46</color>

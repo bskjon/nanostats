@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.iktdev.nanostat.PaymentsActivity;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.adapters.overviewAdapter;
 import com.iktdev.nanostat.adapters.paymentsAdapter;
@@ -74,7 +75,7 @@ public class nanopoolHandler
     public String payments(String prefix, String Address) { return prefix + "payments/" + Address; }
     public String prices(String prefix) { return prefix + "prices"; }
 
-    public DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
+    public static DecimalFormat decimalFormat = new DecimalFormat("#0.00000");
 
     public double getBalance(String url)
     {
@@ -392,10 +393,13 @@ public class nanopoolHandler
             @Override
             public void run() {
                 final ArrayList<Payments> data = getPayments(url);
+                double totalPayed = 0.0;
                 for(Payments p : data)
                 {
                     p.CryptoShort = CryptoShort;
+                    totalPayed += p.amount;
                 }
+                final double finalTotalPayed = totalPayed;
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -403,6 +407,10 @@ public class nanopoolHandler
                        {
                            paymentsAdapter pa = new paymentsAdapter(context, data);
                            lsv.setAdapter(pa);
+                           if (context instanceof PaymentsActivity)
+                           {
+                               ((PaymentsActivity)context).onPaymentDataRecieved(finalTotalPayed);
+                           }
                        }
                     }
                 });

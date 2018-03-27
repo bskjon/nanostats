@@ -1,12 +1,16 @@
 package com.iktdev.nanostat.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.iktdev.nanostat.PaymentsActivity;
 import com.iktdev.nanostat.R;
 import com.iktdev.nanostat.classes.Payments;
 
@@ -30,6 +34,11 @@ public class paymentsAdapter extends BaseAdapter
         this.items = items;
     }
 
+
+    public ArrayList<Payments> getArray()
+    {
+        return this.items;
+    }
 
     @Override
     public int getCount() {
@@ -59,6 +68,19 @@ public class paymentsAdapter extends BaseAdapter
         ((TextView)view.findViewById(R.id.adapter_paymentsDate)).setText(sdf.format(calendar.getTime()));
         ((TextView)view.findViewById(R.id.adapter_paymentsBalance)).setText(String.valueOf(p.amount));
         ((TextView)view.findViewById(R.id.adapter_paymentsCurrencyShort)).setText(p.CryptoShort);
+
+        TextView confirmed = view.findViewById(R.id.adapter_paymentConfirmed);
+        if (p.confirmed)
+        {
+            confirmed.setText(context.getString(R.string.PaymentConfirmed_true));
+            confirmed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.positive, null));
+        }
+        else
+        {
+            confirmed.setText(context.getString(R.string.PaymentConfirmed_false));
+            confirmed.setTextColor(ResourcesCompat.getColor(context.getResources(), R.color.negative, null));
+        }
+
 
         return view;
     }
