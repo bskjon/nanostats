@@ -43,6 +43,13 @@
     <string name="AccountActivity_AccountFound">Din konto har blitt kontrollert og lagt til</string>
     <string name="AccountActivity_AccountNotFound">Kunne ikke finne din konto! Vennligst kontroller at adressen er riktig og forsøk på nytt</string>
 
+    <string name="PaymentConfirmed">Bekreftet</string>
+    <string name="PaymentConfirmed_true">Ja</string>
+    <string name="PaymentConfirmed_false">Nei</string>
+
+    <string name="adapter_payments_ReceivedText">Motatt</string>
+    <string name="adapter_payments_ReceivedOn">Den</string>
+    <string name="title_activity_payments">Betalinger</string>
 
     <string name="title_activity_nanopool_stats">NanopoolStatsActivity</string>
 

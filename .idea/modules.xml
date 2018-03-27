@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Nanostat.iml" filepath="$PROJECT_DIR$/Nanostat.iml" />
       <module fileurl="file://D:\Workspace\Android\android-NanoStats\Nanostat.iml" filepath="D:\Workspace\Android\android-NanoStats\Nanostat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-NanoStats.iml" filepath="$PROJECT_DIR$/android-NanoStats.iml" />
+      <module fileurl="file://E:\Workspace\Android\Nanostat\android-NanoStats.iml" filepath="E:\Workspace\Android\Nanostat\android-NanoStats.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://D:\Workspace\Android\android-NanoStats\app\app.iml" filepath="D:\Workspace\Android\android-NanoStats\app\app.iml" />
     </modules>
