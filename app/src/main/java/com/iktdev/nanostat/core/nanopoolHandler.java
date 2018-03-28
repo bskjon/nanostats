@@ -291,6 +291,9 @@ public class nanopoolHandler
             @Override
             public void run() {
                 ArrayList<ChartData> chartData = getChartData(url);
+                if (chartData == null)
+                    return;
+
                 final Map<Long, ChartData> values = new TreeMap<>();
                 for (ChartData cd : chartData)
                 {
@@ -394,6 +397,8 @@ public class nanopoolHandler
             public void run() {
                 final ArrayList<Payments> data = getPayments(url);
                 double totalPayed = 0.0;
+                if (data == null || data.size() == 0)
+                    return;
                 for(Payments p : data)
                 {
                     p.CryptoShort = CryptoShort;
